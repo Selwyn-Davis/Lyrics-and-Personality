@@ -171,7 +171,7 @@ In terms of Conscientiousness what sets the personality of Section 80 and DAMN a
 
 Now let's take a look at Agreeableness. Personalities that score higher in this category tend to value getting along with others as opposed to self interest and have a more optimistic view of human nature. 
 
-````{r Agreeableness, echo=FALSE}
+```{r Agreeableness, echo=FALSE}
 Altruism<- c(Section80_json_data$personality[[4]][5][[1]][[1]][[4]], 
                          GoodKidMaadCity_json_data$personality[[4]][5][[1]][[1]][[4]], 
                          ToPimpAButterfly_json_data$personality[[4]][5][[1]][[1]][[4]], 
