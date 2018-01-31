@@ -48,7 +48,7 @@ A little explanation as to where I'm getting this data. IBM Watson has a tool ca
 
 Since a minimum amount of words is necessary for the tool to do it's job and using more words increases the strength of analysis I'll be analyzing Kendrick Lamar's personality from album to album. All the lyrics are provided by Genius.com and for the sake of ease I'll be including all guest verses and skits in this analysis. Though these are not necessarily written by the artist himself I'm going to assume that their inclusion in the album is significant in telling his tastes and sensibilities.
 
-That should be ennough of an inro so let's take a look!
+That should be enough of an intro so let's take a look!
 
 ```{r Kendrick Big 5, echo= FALSE}
 
