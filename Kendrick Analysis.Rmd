@@ -43,7 +43,7 @@ Kendrick_Big5<- data.frame(Album_name, Openness, Conscientiousness, Extraversion
 
 My name is Selwyn Davis and this is going to be a short analysis of Kendrick Lamar's personality as seen through his lyrics. I've always been interested in how an artist's persona influences their music and vice versa. A large part of why artists gain popularity is due to their perceived character as well as their work. Rap is a lyrically dense genre that allows more of that character to shine through. 
 
-A little explanation as to where I'm getting this data. IBM Watson has a tool called Personality Insights that uses unstructured text to gain insight into the writer's personality. This tool uses linguistic analytics and personality theory to create a personality profile. The profile will be created using the [Big 5 Personality Traits Model](https://en.wikipedia.org/wiki/Big_Five_personality_traits). Each Big 5 personality trait is measured as a percentile rank and further breaks down into 6 facets.
+A little explanation as to where I'm getting this data. IBM Watson has a tool called [Personality Insights](https://personality-insights-demo.ng.bluemix.net) that uses unstructured text to gain insight into the writer's personality. This tool uses linguistic analytics and personality theory to create a personality profile. The profile will be created using the [Big 5 Personality Traits Model](https://en.wikipedia.org/wiki/Big_Five_personality_traits). Each Big 5 personality trait is measured as a percentile rank and further breaks down into 6 facets.
 
 
 Since a minimum amount of words is necessary for the tool to do it's job and using more words increases the strength of analysis I'll be analyzing Kendrick Lamar's personality from album to album. All the lyrics are provided by Genius.com and for the sake of ease I'll be including all guest verses and skits in this analysis. Though these are not necessarily written by the artist himself I'm going to assume that their inclusion in the album is significant in telling his tastes and sensibilities.
@@ -121,7 +121,7 @@ ggplot(Kendrick.long,aes(variable,value,fill=Album_name))+
 
 There's a lot of consistency acorss albums for Openness and Extraversion, but notice the clear split in the other categories. There's a striking similarity between Kendrick's first album, Section 80, and his latest album, DAMN. Let's look at a breakdown of those traits and see if we can find anything interesting there.
 
-Here we have Conscientiousness
+Here we have Conscientiousness.
 
 ```{r Conscientiousness, echo= FALSE}
 Achievement_Striving<- c(Section80_json_data$personality[[2]][5][[1]][[1]][[4]], 
@@ -217,7 +217,7 @@ ggplot(Kendrick_Agreeableness.long,aes(variable,value,fill=Album_name))+
 Section 80 and DAMN score lower in every facet of Agreeableness than his other two albums. It's worth noting that of all the facets of Agreeableness his albums do score higher in Sympathy. With such a low Modesty score it's safe to say that humility is not his strong suit. 
 
 
-Now forEmotional Range also known as Nueroticism.
+Now for Emotional Range also known as Nueroticism. Personalities that rank higher in this measure tend to experience and express more emotions such as anger, anxiety or depresssion. 
 
 ```{r Neuroticism, echo=FALSE}
 
@@ -247,13 +247,13 @@ Self_Conscious<- c(Section80_json_data$personality[[5]][5][[1]][[5]][[4]],
              ToPimpAButterfly_json_data$personality[[5]][5][[1]][[5]][[4]], 
              Damn_json_data$personality[[5]][5][[1]][[5]][[4]])
 
-Stress_Sensitivity<- c(Section80_json_data$personality[[5]][5][[1]][[6]][[4]], 
+Stress<- c(Section80_json_data$personality[[5]][5][[1]][[6]][[4]], 
           GoodKidMaadCity_json_data$personality[[5]][5][[1]][[6]][[4]], 
           ToPimpAButterfly_json_data$personality[[5]][5][[1]][[6]][[4]], 
           Damn_json_data$personality[[5]][5][[1]][[6]][[4]])
 
 Kendrick_Neuroticism<- data.frame(Album_name, Fiery, Worry_Prone, Melancholy,
-                                  Immoderation, Self_Conscious, Stress_Sensitivity)
+                                  Immoderation, Self_Conscious, Stress)
 
 Kendrick_Neuroticism.long<- melt(Kendrick_Neuroticism)
 
