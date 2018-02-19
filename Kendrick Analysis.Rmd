@@ -2,7 +2,9 @@
 title: "Kendrick Lamar Personality Analysis"
 author: "Selwyn Davis"
 date: "January 30, 2018"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, echo= FALSE}
@@ -41,12 +43,14 @@ Kendrick_Big5<- data.frame(Album_name, Openness, Conscientiousness, Extraversion
 
 ## Kendrick Lamar Personality Analysis
 
-My name is Selwyn Davis and this is going to be a short analysis of Kendrick Lamar's personality as seen through his lyrics. I've always been interested in how an artist's persona influences their music and vice versa. A large part of why artists gain popularity is due to their perceived character as well as their work. Rap is a lyrically dense genre that allows more of that character to shine through. 
+My name is Selwyn Davis and this is going to be a short analysis of Kendrick Lamar's personality as seen through his lyrics. I've always been interested in how an artist's persona influences their music and appeal. A large part of why artists gain popularity is due to their perceived character as well as their work. Rap is a lyrically dense genre that allows more of that character to shine through. 
 
 A little explanation as to where I'm getting this data. IBM Watson has a tool called [Personality Insights](https://personality-insights-demo.ng.bluemix.net) that uses unstructured text to gain insight into the writer's personality. This tool uses linguistic analytics and personality theory to create a personality profile. The profile will be created using the [Big 5 Personality Traits Model](https://en.wikipedia.org/wiki/Big_Five_personality_traits). Each Big 5 personality trait is measured as a percentile rank and further breaks down into 6 facets.
 
 
 Since a minimum amount of words is necessary for the tool to do it's job and using more words increases the strength of analysis I'll be analyzing Kendrick Lamar's personality from album to album. All the lyrics are provided by Genius.com and for the sake of ease I'll be including all guest verses and skits in this analysis. Though these are not necessarily written by the artist himself I'm going to assume that their inclusion in the album is significant in telling his tastes and sensibilities.
+
+Disclaimer: Keep in mind that this analysis is looking purely at word choice and doesn't take into account context or musical elements. Therefore this analysis won't tell you the complete story of an artists music or message. This analysis is for fun, one piece of an artist. 
 
 That should be enough of an intro so let's take a look!
 
@@ -60,9 +64,21 @@ ggplot(Kendrick.long,aes(variable,value,fill=Album_name))+
 
 ```
 
-Nice! Here we can see that all of Kendrick's albums score pretty highly when it comes to the Openness trait. Openness reflects the degree of intellectual curiosity, creativity and a preference for novelty and variety a person has. It is also described as the extent to which a person is imaginative or independent and depicts a personal preference for a variety of activities over a strict routine.
+Nice! Here we can see that all of Kendrick's albums rank pretty highly when it comes to the Openness trait. Openness reflects the degree of intellectual curiosity, creativity and a preference for novelty and variety a person has. It is also described as the extent to which a person is imaginative or independent and depicts a personal preference for a variety of activities over a strict routine.
 
-Let's look deeper into what makes Kendrick Lamar score so highly in the Openness trait
+***
+
+> See a lot of y'all don't understand Kendrick Lamar  
+Because you wonder how I could talk about money, hoes, clothes  
+God and history all in the same sentence.  
+You know what all the things have in common?  
+Only half of the truth, if you tell it.
+
+--- *Ab Soul's Outro, Section 80*
+
+***
+
+Let's look deeper into what makes Kendrick Lamar rank so highly in the Openness trait
 
 
 ```{r pressure, echo=FALSE}
@@ -109,7 +125,20 @@ ggplot(Kendrick_Openness.long,aes(variable,value,fill=Album_name))+
 
 ```
 
-Here we can see Kendrick scores pretty consistently acorss four of the 6 Openness facets. We find the lowest scores and least consistency in the Emotionality and Authority Chaellenging facets. Emotionality is a measure of emotional availibility or awareness of one's emotions. Authority Challenging can refer to one's openness to re-examine one's one values and traditions or their readiness to challenge external authority.
+Here we can see Kendrick ranks pretty consistently acorss four of the 6 Openness facets. We find the lowest ranks and least consistency in the Emotionality and Authority Chaellenging facets. Emotionality is a measure of emotional availibility or awareness of one's emotions. Authority Challenging can refer to one's openness to re-examine one's own values and traditions or their readiness to challenge external authority.
+
+***
+
+> I understand I ain't perfect, I probably won't come around  
+This time I might put you down  
+Last time I ain't give a fuck, I still feel the same now  
+My feelings might go numb, you're dealing with cold thumb  
+
+--- *Pride, DAMN*
+
+***
+
+
 
 Let's go back to our orignal Big 5 bar graph from earlier.
 ```{r Kendrick Big 5 Recap, echo= FALSE}
@@ -167,9 +196,11 @@ ggplot(Kendrick_Conscientiousness.long,aes(variable,value,fill=Album_name))+
 ```
 
 
-In terms of Conscientiousness what sets the personality of Section 80 and DAMN apart from his other albums is Achievement Striving, the need for personal achievemnt and sense of direction, and Self-Discipline, a measure of will power or the capacity to begin tasks and see them through to completiion despite distractions or boredom. 
+In terms of Conscientiousness what sets the personality of Section 80 and DAMN apart from his other albums is Achievement Striving, the need for personal achievemnt or sense of direction, and Self-Discipline, a measure of will power or the capacity to begin tasks and see them through to completiion despite distractions or boredom.
 
-Now let's take a look at Agreeableness. Personalities that score higher in this category tend to value getting along with others as opposed to self interest and have a more optimistic view of human nature. 
+
+
+Now let's take a look at Agreeableness. Personalities that rank higher in this category tend to value getting along with others as opposed to self interest and have a more optimistic view of human nature. 
 
 ```{r Agreeableness, echo=FALSE}
 Altruism<- c(Section80_json_data$personality[[4]][5][[1]][[1]][[4]], 
@@ -214,8 +245,46 @@ ggplot(Kendrick_Agreeableness.long,aes(variable,value,fill=Album_name))+
 
 ```
 
-Section 80 and DAMN score lower in every facet of Agreeableness than his other two albums. It's worth noting that of all the facets of Agreeableness his albums do score higher in Sympathy. With such a low Modesty score it's safe to say that humility is not his strong suit. 
+Agreeableness is where Kendrick Lamar's albums rank lowest and we can see that Section 80 and DAMN rank lower in every facet of Agreeableness than his other two albums.  
 
+***
+
+> Aw man, goddamn, all hell broke loose  
+You killed my cousin back in '94, fuck yo' truce!  
+Now crawl your head in that noose  
+You wind up dead on the news  
+Ain't no peace treaty, just pieces BG's up to pre-approve  
+
+--- *m.A.A.D. city, good kid, m.A.A.d city*
+
+***
+
+It's worth noting that of all the facets of Agreeableness his albums do rank higher in Sympathy.
+
+***
+
+> And you're right, your brother was a brother to me  
+And your sister's situation was the one that pulled me  
+In a direction to speak on somethin'  
+That's realer than the TV screen  
+
+--- *Sing About Me, good kid, m.A.A.d city*
+
+***
+
+
+With such a low Modesty rank it's safe to say that humility has never been his strong suit.
+
+***
+
+> A.M. to the P.M., P.M. to the A.M., funk  
+Piss out your per diem, you just gotta hate 'em, funk  
+If I quit your BM, I still ride Mercedes, funk  
+If I quit this season, I still be the greatest, funk  
+
+--- *HUMBLE, DAMN*
+
+***
 
 Now for Emotional Range also known as Nueroticism. Personalities that rank higher in this measure tend to experience and express more emotions such as anger, anxiety or depresssion. 
 
@@ -263,7 +332,36 @@ ggplot(Kendrick_Neuroticism.long,aes(variable,value,fill=Album_name))+
 ```
 
 
-In every facet of Emotional Range Section 80 and DAMN score higher than Kendrick's albums. It's interesting to see that the personality of his latest and most successful album are closer to each other than his works in between. The main cause for this being that they are both more emotionally expressive than his other albums. 
+In every facet of Emotional Range Section 80 and DAMN rank higher than Kendrick's albums. To Pimp a Butterfly does match that expressivness when it comes to Melancholy and stress.
+
+***
+
+> I fuckin' tell you, you fuckin' failure-you ain't no leader!  
+I never liked you, forever despise you-I don't need you!  
+The world don't need you, don't let them deceive you   
+
+--- *u, To Pimp A Butterfly*
+
+***
+
+***
+
+> Guilt trippin' and feelin' resentment  
+I never met a transient that demanded attention  
+They got me frustrated, indecisive and power trippin'  
+Sour emotions got me lookin' at the universe different  
+I should distance myself, I should keep it relentless  
+My selfishness is what got me here, who the fuck I'm kiddin'?  
+
+--- *How Much A Dollar Cost, To Pimp A Butterfly*
+
+***
+
+It's interesting to see that the personality of his latest and most successful album are closer to each other than his works in between. The main cause for this being that they are both more emotionally expressive than his other albums.
+
+To Pmp a Butterfly
+
+
 
 As Kendrick Lamar's career continues it'll be interesting how the personality of his albums will progress. We could be in store for a fiery, emotional work or something more calm and disciplined.
 
