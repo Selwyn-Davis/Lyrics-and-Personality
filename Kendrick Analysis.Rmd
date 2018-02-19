@@ -359,10 +359,6 @@ My selfishness is what got me here, who the fuck I'm kiddin'?
 
 It's interesting to see that the personality of his latest and most successful album are closer to each other than his works in between. The main cause for this being that they are both more emotionally expressive than his other albums.
 
-To Pmp a Butterfly
-
-
-
 As Kendrick Lamar's career continues it'll be interesting how the personality of his albums will progress. We could be in store for a fiery, emotional work or something more calm and disciplined.
 
 There's a lot more data provided by the personality insights than what I've presented here so I've put all the JSON files with the data on my [Github](https://github.com/Selwyn-Davis/Lyrics-and-Personality). 
