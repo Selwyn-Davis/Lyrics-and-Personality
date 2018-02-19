@@ -332,7 +332,7 @@ ggplot(Kendrick_Neuroticism.long,aes(variable,value,fill=Album_name))+
 ```
 
 
-In every facet of Emotional Range Section 80 and DAMN rank higher than Kendrick's albums. To Pimp a Butterfly does match that expressivness when it comes to Melancholy and stress.
+In every facet of Emotional Range Section 80 and DAMN rank higher than Kendrick's albums. To Pimp a Butterfly does match that expressivness when it comes to Melancholy and Stress.
 
 ***
 
