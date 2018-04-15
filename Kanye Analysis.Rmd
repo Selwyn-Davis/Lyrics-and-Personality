@@ -1,0 +1,452 @@
+---
+title: "Kanye Personality Analysis"
+author: "Selwyn Davis"
+date: "March 7, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+library("rjson")
+library(ggplot2)
+library(reshape2)
+
+CollegeDropout_json_data<- fromJSON(file= 'CollegeDropout.json')
+LateRegistration_json_data<- fromJSON(file= 'LateRegistration.json')
+Graduation_json_data<- fromJSON(file= 'Graduation.json')
+Heartbreak_json_data<- fromJSON(file= 'Heartbreak.json')
+MBDTF_json_data<- fromJSON(file= 'MBDTF.json')
+Yeezus_json_data<- fromJSON(file= 'Yeezus.json')
+TLOP_json_data<- fromJSON(file= 'TLOP.json')
+
+```
+
+## Kendrick Lamar Personality Analysis
+
+My name is Selwyn Davis and this is going to be a short analysis of Kanye West's personality as seen through his lyrics. I've always been interested in how an artist's persona influences their music and how that persona changes over time. A large part of why artists gain popularity is due to their perceived character. Rap is a lyrically dense genre that allows more of that character to shine through. 
+
+A little explanation as to where I'm getting this data. IBM Watson has a tool called [Personality Insights](https://personality-insights-demo.ng.bluemix.net) that uses unstructured text to gain insight into the writer's personality. This tool uses linguistic analytics and personality theory to create a personality profile. The profile will be created using the [Big 5 Personality Traits Model](https://en.wikipedia.org/wiki/Big_Five_personality_traits). Each Big 5 personality trait is measured as a percentile rank and further breaks down into 6 facets.
+
+
+Since a minimum amount of words is necessary for the tool to do it's job and using more words increases the strength of analysis I'll be analyzing Kanye West's personality from album to album. All the lyrics are provided by Genius.com and for the sake of ease I'll be including all guest verses and skits in this analysis. Though these are not necessarily written by the artist himself I'm going to assume that their inclusion in the album is significant in telling his tastes and sensibilities.
+
+Disclaimer: Keep in mind that this analysis is looking purely at word choice and doesn't take into account context or musical elements. Therefore this analysis won't tell you the complete story of an artists music or message. This analysis is for fun, one piece of an artist. 
+
+That should be enough of an intro so let's take a look!
+
+```{r Big 5, echo= FALSE}
+Openness<- c(CollegeDropout_json_data$personality[[1]][4][[1]], LateRegistration_json_data$personality[[1]][4][[1]], 
+             Graduation_json_data$personality[[1]][4][[1]], Heartbreak_json_data$personality[[1]][4][[1]],
+             MBDTF_json_data$personality[[1]][4][[1]], Yeezus_json_data$personality[[1]][4][[1]], 
+             TLOP_json_data$personality[[1]][4][[1]])
+
+Conscientiousness<- c(CollegeDropout_json_data$personality[[2]][4][[1]], LateRegistration_json_data$personality[[2]][4][[1]], 
+                      Graduation_json_data$personality[[2]][4][[1]], Heartbreak_json_data$personality[[2]][4][[1]],
+                      MBDTF_json_data$personality[[2]][4][[1]], Yeezus_json_data$personality[[2]][4][[1]], 
+                      TLOP_json_data$personality[[2]][4][[1]])
+
+Extraversion<- c(CollegeDropout_json_data$personality[[3]][4][[1]], LateRegistration_json_data$personality[[3]][4][[1]], 
+                 Graduation_json_data$personality[[3]][4][[1]], Heartbreak_json_data$personality[[3]][4][[1]], 
+                 MBDTF_json_data$personality[[3]][4][[1]], Yeezus_json_data$personality[[3]][4][[1]], 
+                 TLOP_json_data$personality[[3]][4][[1]])
+
+
+Agreeableness<- c(CollegeDropout_json_data$personality[[4]][4][[1]], LateRegistration_json_data$personality[[4]][4][[1]], 
+                  Graduation_json_data$personality[[4]][4][[1]], Heartbreak_json_data$personality[[4]][4][[1]],
+                  MBDTF_json_data$personality[[4]][4][[1]], Yeezus_json_data$personality[[4]][4][[1]], 
+                  TLOP_json_data$personality[[4]][4][[1]])
+
+Emotional_range<- c(CollegeDropout_json_data$personality[[5]][4][[1]], LateRegistration_json_data$personality[[5]][4][[1]], 
+                    Graduation_json_data$personality[[5]][4][[1]], Heartbreak_json_data$personality[[5]][4][[1]],
+                    MBDTF_json_data$personality[[5]][4][[1]], Yeezus_json_data$personality[[5]][4][[1]], 
+                    TLOP_json_data$personality[[5]][4][[1]])
+
+
+Album_name= c("College Dropout", "Late Registration", "Graduation", "808's & Heartbreak", "My Beautiful Dark Twisted Fantasy",
+              "Yeezus", "The Life of Pablo")
+
+Kanye_Big5<- data.frame(Album_name, Openness, Conscientiousness, Extraversion, Agreeableness, Emotional_range)
+
+Kanye.long<- melt(Kanye_Big5)
+
+ggplot(Kanye.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position = "dodge")+ 
+  labs(title="Kanye's Big 5 Traits", fill= "Album", x= "Personality Traits", y= "Percentile Rank")+scale_x_discrete()
+
+```
+
+
+**Openess** - Openness to experience. Higher: Intellectually curious, emotionally-aware, sensitive to beauty and willing to try new things.
+Lower: Preferring the plain, straightforward, and obvious over the complex, ambiguous, and subtle.
+
+**Conscientiousness** - Higher: More self-disciplined, dutiful, or aiming for achievement against measures or outside expectations.
+Lower: More likely to prefer the spontaneous over the planned.
+
+**Extraversion** - Higher: More energetic and pronounced engagement with the external world. Likes high group visibility, talking, and asserting themselves.
+Lower: Needs less stimulation and are more independent of their social world. It does not mean they are shy, un-friendly, or antisocial.
+
+**Agreeableness** - Higher: Value getting along with others. They have a more optimistic view of human nature.
+Lower: Value self interests over others. They are more skeptical of others' motives.
+
+**Emotional Range** -  Higher: More likely to have negative emotions or get upset. It could mean they are going through a tough time.
+Lower: More calm and less likely to get upset. It does not mean they are positive, or happy people.
+
+
+```{r Openness, echo=FALSE}
+Adventurousness<- c(CollegeDropout_json_data$personality[[1]][5][[1]][[1]][[4]], 
+                    LateRegistration_json_data$personality[[1]][5][[1]][[1]][[4]], 
+                    Graduation_json_data$personality[[1]][5][[1]][[1]][[4]], 
+                    Heartbreak_json_data$personality[[1]][5][[1]][[1]][[4]],
+                    MBDTF_json_data$personality[[1]][5][[1]][[1]][[4]], Yeezus_json_data$personality[[1]][5][[1]][[1]][[4]], 
+                    TLOP_json_data$personality[[1]][5][[1]][[1]][[4]])
+
+Artistic_Interest<- c(CollegeDropout_json_data$personality[[1]][5][[1]][[2]][[4]], 
+                      LateRegistration_json_data$personality[[1]][5][[1]][[2]][[4]], 
+                      Graduation_json_data$personality[[1]][5][[1]][[2]][[4]], 
+                      Heartbreak_json_data$personality[[1]][5][[1]][[2]][[4]],
+                      MBDTF_json_data$personality[[1]][5][[1]][[2]][[4]], Yeezus_json_data$personality[[1]][5][[1]][[2]][[4]], 
+                      TLOP_json_data$personality[[1]][5][[1]][[2]][[4]])
+
+Emotionality<- c(CollegeDropout_json_data$personality[[1]][5][[1]][[3]][[4]], 
+                 LateRegistration_json_data$personality[[1]][5][[1]][[3]][[4]], 
+                 Graduation_json_data$personality[[1]][5][[1]][[3]][[4]], 
+                 Heartbreak_json_data$personality[[1]][5][[1]][[3]][[4]],
+                 MBDTF_json_data$personality[[1]][5][[1]][[3]][[4]], Yeezus_json_data$personality[[1]][5][[1]][[3]][[4]], 
+                 TLOP_json_data$personality[[1]][5][[1]][[3]][[4]])
+
+Imagination<- c(CollegeDropout_json_data$personality[[1]][5][[1]][[4]][[4]], 
+                LateRegistration_json_data$personality[[1]][5][[1]][[4]][[4]], 
+                Graduation_json_data$personality[[1]][5][[1]][[4]][[4]], 
+                Heartbreak_json_data$personality[[1]][5][[1]][[4]][[4]],
+                MBDTF_json_data$personality[[1]][5][[1]][[4]][[4]], Yeezus_json_data$personality[[1]][5][[1]][[4]][[4]], 
+                TLOP_json_data$personality[[1]][5][[1]][[4]][[4]])
+
+
+Intellect<- c(CollegeDropout_json_data$personality[[1]][5][[1]][[5]][[4]], 
+              LateRegistration_json_data$personality[[1]][5][[1]][[5]][[4]], 
+              Graduation_json_data$personality[[1]][5][[1]][[5]][[4]], 
+              Heartbreak_json_data$personality[[1]][5][[1]][[5]][[4]],
+              MBDTF_json_data$personality[[1]][5][[1]][[5]][[4]], Yeezus_json_data$personality[[1]][5][[1]][[5]][[4]], 
+              TLOP_json_data$personality[[1]][5][[1]][[5]][[4]])
+
+Authority_Challenge<- c(CollegeDropout_json_data$personality[[1]][5][[1]][[6]][[4]], 
+                        LateRegistration_json_data$personality[[1]][5][[1]][[6]][[4]], 
+                        Graduation_json_data$personality[[1]][5][[1]][[6]][[4]], 
+                        Heartbreak_json_data$personality[[1]][5][[1]][[6]][[4]],
+                        MBDTF_json_data$personality[[1]][5][[1]][[6]][[4]], Yeezus_json_data$personality[[1]][5][[1]][[6]][[4]], 
+                        TLOP_json_data$personality[[1]][5][[1]][[6]][[4]])
+
+Kanye_Openness<- data.frame(Album_name, Adventurousness, Artistic_Interest, Emotionality, Imagination, Intellect, 
+                               Authority_Challenge)
+
+Kanye_Openness.long<- melt(Kanye_Openness)
+
+ggplot(Kanye_Openness.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge")+ 
+  labs(title="Kanye's Openness", fill= "Album", x= "Openness Facets", y= "Percentile Rank")
+
+```
+
+
+**Adventurousness** -  Eagerness to trying new activities and experiencing new things
+
+**Artistic Interest** - Appreciation for art and beauty, both man made and in nature
+
+**Emotionality** - Emotional availability; awareness of own feelings.
+
+**Imagination** - Openness to creating an inner world of fantasy
+
+**Intellect** - Intellectual curiosity;openness to new ideas
+
+**Authority Challenging** - Opennes to re-examine own values and traditions; readiness to challenge authority
+
+
+```{r Conscientiousness, echo=FALSE}
+Achievement_Striving<- c(CollegeDropout_json_data$personality[[2]][5][[1]][[1]][[4]], 
+                         LateRegistration_json_data$personality[[2]][5][[1]][[1]][[4]], 
+                         Graduation_json_data$personality[[2]][5][[1]][[1]][[4]], 
+                         Heartbreak_json_data$personality[[2]][5][[1]][[1]][[4]],
+                         MBDTF_json_data$personality[[2]][5][[1]][[1]][[4]], Yeezus_json_data$personality[[2]][5][[1]][[1]][[4]], 
+                         TLOP_json_data$personality[[2]][5][[1]][[1]][[4]])
+
+Cautiousness<- c(CollegeDropout_json_data$personality[[2]][5][[1]][[2]][[4]], 
+                  LateRegistration_json_data$personality[[2]][5][[1]][[2]][[4]], 
+                  Graduation_json_data$personality[[2]][5][[1]][[2]][[4]], 
+                  Heartbreak_json_data$personality[[2]][5][[1]][[2]][[4]],
+                  MBDTF_json_data$personality[[2]][5][[1]][[2]][[4]], Yeezus_json_data$personality[[2]][5][[1]][[2]][[4]], 
+                  TLOP_json_data$personality[[2]][5][[1]][[2]][[4]])
+
+Dutifulness<- c(CollegeDropout_json_data$personality[[2]][5][[1]][[3]][[4]], 
+                LateRegistration_json_data$personality[[2]][5][[1]][[3]][[4]], 
+                Graduation_json_data$personality[[2]][5][[1]][[3]][[4]], 
+                Heartbreak_json_data$personality[[2]][5][[1]][[3]][[4]],
+                MBDTF_json_data$personality[[2]][5][[1]][[3]][[4]], Yeezus_json_data$personality[[2]][5][[1]][[3]][[4]], 
+                TLOP_json_data$personality[[2]][5][[1]][[3]][[4]])
+
+Orderliness<- c(CollegeDropout_json_data$personality[[2]][5][[1]][[4]][[4]], 
+                LateRegistration_json_data$personality[[2]][5][[1]][[4]][[4]], 
+                Graduation_json_data$personality[[2]][5][[1]][[4]][[4]], 
+                Heartbreak_json_data$personality[[2]][5][[1]][[4]][[4]],
+                MBDTF_json_data$personality[[2]][5][[1]][[4]][[4]], Yeezus_json_data$personality[[2]][5][[1]][[4]][[4]], 
+                TLOP_json_data$personality[[2]][5][[1]][[4]][[4]])
+
+Self_Discipline<- c(CollegeDropout_json_data$personality[[2]][5][[1]][[5]][[4]], 
+                    LateRegistration_json_data$personality[[2]][5][[1]][[5]][[4]], 
+                    Graduation_json_data$personality[[2]][5][[1]][[5]][[4]], 
+                    Heartbreak_json_data$personality[[2]][5][[1]][[5]][[4]],
+                    MBDTF_json_data$personality[[2]][5][[1]][[5]][[4]], Yeezus_json_data$personality[[2]][5][[1]][[5]][[4]], 
+                    TLOP_json_data$personality[[2]][5][[1]][[5]][[4]])
+
+Self_Efficacy<- c(CollegeDropout_json_data$personality[[2]][5][[1]][[6]][[4]], 
+                  LateRegistration_json_data$personality[[2]][5][[1]][[6]][[4]], 
+                  Graduation_json_data$personality[[2]][5][[1]][[6]][[4]], 
+                  Heartbreak_json_data$personality[[2]][5][[1]][[6]][[4]],
+                  MBDTF_json_data$personality[[2]][5][[1]][[6]][[4]], Yeezus_json_data$personality[[2]][5][[1]][[6]][[4]], 
+                  TLOP_json_data$personality[[2]][5][[1]][[6]][[4]])
+
+Kanye_Conscientiousness<- data.frame(Album_name, Achievement_Striving, Cautiousness, Dutifulness, Orderliness,
+                                        Self_Discipline, Self_Efficacy)
+
+Kanye_Conscientiousness.long<- melt(Kanye_Conscientiousness)
+
+ggplot(Kanye_Conscientiousness.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge")+ 
+  labs(title="Kanye's Conscientiousness", fill= "Album", x= "Conscientiousness Facets", y= "Percentile Rank")
+```
+
+
+**Achievement Striving** - The need for personal achievement and sense of direction. 
+
+**Cautiousness** - Tendency to think things through before acting or speaking.
+
+**Dutifulness** - Sense of duty; amount of emphasis placed on fulfilling obligations.
+
+**Orderliness** - Personal organization, tidiness, neatness.
+
+**Self Discipline** - Will-power; the capacity to begin tasks and follow through to completion in spite of boredom or distractions.
+
+**Self Efficacy** - Belief in one's own competence
+
+
+```{r Extraversion, echo=FALSE}
+Activity<- c(CollegeDropout_json_data$personality[[3]][5][[1]][[1]][[4]], 
+             LateRegistration_json_data$personality[[3]][5][[1]][[1]][[4]], 
+             Graduation_json_data$personality[[3]][5][[1]][[1]][[4]], 
+             Heartbreak_json_data$personality[[3]][5][[1]][[1]][[4]],
+             MBDTF_json_data$personality[[3]][5][[1]][[1]][[4]], Yeezus_json_data$personality[[3]][5][[1]][[1]][[4]], 
+             TLOP_json_data$personality[[3]][5][[1]][[1]][[4]])
+
+Assertive<- c(CollegeDropout_json_data$personality[[3]][5][[1]][[2]][[4]], 
+              LateRegistration_json_data$personality[[3]][5][[1]][[2]][[4]], 
+              Graduation_json_data$personality[[3]][5][[1]][[2]][[4]], 
+              Heartbreak_json_data$personality[[3]][5][[1]][[2]][[4]],
+              MBDTF_json_data$personality[[3]][5][[1]][[2]][[4]], Yeezus_json_data$personality[[3]][5][[1]][[2]][[4]], 
+              TLOP_json_data$personality[[3]][5][[1]][[2]][[4]])
+
+Cheerful<- c(CollegeDropout_json_data$personality[[3]][5][[1]][[3]][[4]], 
+             LateRegistration_json_data$personality[[3]][5][[1]][[3]][[4]], 
+             Graduation_json_data$personality[[3]][5][[1]][[3]][[4]], 
+             Heartbreak_json_data$personality[[3]][5][[1]][[3]][[4]],
+             MBDTF_json_data$personality[[3]][5][[1]][[3]][[4]], Yeezus_json_data$personality[[3]][5][[1]][[3]][[4]], 
+             TLOP_json_data$personality[[3]][5][[1]][[3]][[4]])
+
+Thrill_Seeking<- c(CollegeDropout_json_data$personality[[3]][5][[1]][[4]][[4]], 
+                   LateRegistration_json_data$personality[[3]][5][[1]][[4]][[4]], 
+                   Graduation_json_data$personality[[3]][5][[1]][[4]][[4]], 
+                   Heartbreak_json_data$personality[[3]][5][[1]][[4]][[4]],
+                   MBDTF_json_data$personality[[3]][5][[1]][[4]][[4]], Yeezus_json_data$personality[[3]][5][[1]][[4]][[4]], 
+                   TLOP_json_data$personality[[3]][5][[1]][[4]][[4]])
+
+
+Warmth<- c(CollegeDropout_json_data$personality[[3]][5][[1]][[5]][[4]], 
+             LateRegistration_json_data$personality[[3]][5][[1]][[5]][[4]], 
+             Graduation_json_data$personality[[3]][5][[1]][[5]][[4]], 
+             Heartbreak_json_data$personality[[3]][5][[1]][[5]][[4]],
+             MBDTF_json_data$personality[[3]][5][[1]][[5]][[4]], Yeezus_json_data$personality[[3]][5][[1]][[5]][[4]], 
+             TLOP_json_data$personality[[3]][5][[1]][[5]][[4]])
+
+Gregariousness<- c(CollegeDropout_json_data$personality[[3]][5][[1]][[6]][[4]], 
+                   LateRegistration_json_data$personality[[3]][5][[1]][[6]][[4]], 
+                   Graduation_json_data$personality[[3]][5][[1]][[6]][[4]], 
+                   Heartbreak_json_data$personality[[3]][5][[1]][[6]][[4]],
+                   MBDTF_json_data$personality[[3]][5][[1]][[6]][[4]], Yeezus_json_data$personality[[3]][5][[1]][[6]][[4]], 
+                   TLOP_json_data$personality[[3]][5][[1]][[6]][[4]])
+
+
+Kanye_Extraversion<- data.frame(Album_name, Activity, Assertive, Cheerful,
+                                   Thrill_Seeking, Warmth, Gregariousness)
+
+Kanye_Extraversion.long<- melt(Kanye_Extraversion)
+
+ggplot(Kanye_Extraversion.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge") + 
+  labs(title="Kanye's Extraversion", fill= "Album", x= "Extraversion Facets", y= "Percentile Rank")
+```
+
+
+**Activity** - Pace of living; level of busyness
+
+**Assertive** - Forcefulness of expression; pursuit of leadership and social ascendancy; desire to direct the activities of others.
+
+**Cheerful** - Tendency to express or experience positive emotions.
+
+**Thrill Seeking** -  A need for environmental stimulation.
+
+**Warmth** - Interest in and friendliness towards others; socially confident.
+
+**Gregariousness** - Fondness for the company of others; sociability.
+
+
+```{r Agreeableness, echo=FALSE}
+Altruism<- c(CollegeDropout_json_data$personality[[4]][5][[1]][[1]][[4]], 
+             LateRegistration_json_data$personality[[4]][5][[1]][[1]][[4]], 
+             Graduation_json_data$personality[[4]][5][[1]][[1]][[4]], 
+             Heartbreak_json_data$personality[[4]][5][[1]][[1]][[4]],
+             MBDTF_json_data$personality[[4]][5][[1]][[1]][[4]], Yeezus_json_data$personality[[4]][5][[1]][[1]][[4]], 
+             TLOP_json_data$personality[[4]][5][[1]][[1]][[4]])
+
+Cooperation<- c(CollegeDropout_json_data$personality[[4]][5][[1]][[2]][[4]], 
+                LateRegistration_json_data$personality[[4]][5][[1]][[2]][[4]], 
+                Graduation_json_data$personality[[4]][5][[1]][[2]][[4]], 
+                Heartbreak_json_data$personality[[4]][5][[1]][[2]][[4]],
+                MBDTF_json_data$personality[[4]][5][[1]][[2]][[4]], Yeezus_json_data$personality[[4]][5][[1]][[2]][[4]], 
+                TLOP_json_data$personality[[4]][5][[1]][[2]][[4]])
+
+
+Modesty<- c(CollegeDropout_json_data$personality[[4]][5][[1]][[3]][[4]], 
+            LateRegistration_json_data$personality[[4]][5][[1]][[3]][[4]], 
+            Graduation_json_data$personality[[4]][5][[1]][[3]][[4]], 
+            Heartbreak_json_data$personality[[4]][5][[1]][[3]][[4]],
+            MBDTF_json_data$personality[[4]][5][[1]][[3]][[4]], Yeezus_json_data$personality[[4]][5][[1]][[3]][[4]], 
+            TLOP_json_data$personality[[4]][5][[1]][[3]][[4]])
+
+Uncomprimising<- c(CollegeDropout_json_data$personality[[4]][5][[1]][[4]][[4]], 
+                    LateRegistration_json_data$personality[[4]][5][[1]][[4]][[4]], 
+                    Graduation_json_data$personality[[4]][5][[1]][[4]][[4]], 
+                    Heartbreak_json_data$personality[[4]][5][[1]][[4]][[4]],
+                    MBDTF_json_data$personality[[4]][5][[1]][[4]][[4]], Yeezus_json_data$personality[[4]][5][[1]][[4]][[4]], 
+                    TLOP_json_data$personality[[4]][5][[1]][[4]][[4]])
+
+
+Sympathy<- c(CollegeDropout_json_data$personality[[4]][5][[1]][[5]][[4]], 
+             LateRegistration_json_data$personality[[4]][5][[1]][[5]][[4]], 
+             Graduation_json_data$personality[[4]][5][[1]][[5]][[4]], 
+             Heartbreak_json_data$personality[[4]][5][[1]][[5]][[4]],
+             MBDTF_json_data$personality[[4]][5][[1]][[5]][[4]], Yeezus_json_data$personality[[4]][5][[1]][[5]][[4]], 
+             TLOP_json_data$personality[[4]][5][[1]][[5]][[4]])
+
+Trust<- c(CollegeDropout_json_data$personality[[4]][5][[1]][[6]][[4]], 
+          LateRegistration_json_data$personality[[4]][5][[1]][[6]][[4]], 
+          Graduation_json_data$personality[[4]][5][[1]][[6]][[4]], 
+          Heartbreak_json_data$personality[[4]][5][[1]][[6]][[4]],
+          MBDTF_json_data$personality[[4]][5][[1]][[6]][[4]], Yeezus_json_data$personality[[4]][5][[1]][[6]][[4]], 
+          TLOP_json_data$personality[[4]][5][[1]][[6]][[4]])
+
+Kanye_Agreeableness<- data.frame(Album_name, Altruism, Cooperation, Modesty, 
+                                    Uncomprimising, Sympathy, Trust)
+
+Kanye_Agreeableness.long<- melt(Kanye_Agreeableness)
+
+ggplot(Kanye_Agreeableness.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge")+ 
+  labs(title="Kanye's Agreeableness", fill= "Album", x= "Agreeableness Facets", y= "Percentile Rank")
+```
+
+
+**Altruism** - Active and genuine concern for the welfare of others.
+
+**Cooperation** - Dislike of confrontations. Responding to interpersonal conflict with a willingness to compromise.
+
+**Modesty** -  Tendency to be unassuming and play down own achievements; humility.
+
+**Uncomprimising** - Frank and genuine in exoression; candid, blunt.
+
+**Sympathy** - Attitude of compassion for others; kindness.
+
+**Trust** - Level of belief in the sincerity and good intentions of others.
+
+
+```{r Emotional Range, echo=FALSE}
+Fiery<- c(CollegeDropout_json_data$personality[[5]][5][[1]][[1]][[4]], 
+          LateRegistration_json_data$personality[[5]][5][[1]][[1]][[4]], 
+          Graduation_json_data$personality[[5]][5][[1]][[1]][[4]], 
+          Heartbreak_json_data$personality[[5]][5][[1]][[1]][[4]],
+          MBDTF_json_data$personality[[5]][5][[1]][[1]][[4]], Yeezus_json_data$personality[[5]][5][[1]][[1]][[4]], 
+          TLOP_json_data$personality[[5]][5][[1]][[1]][[4]])
+
+Worry_Prone<- c(CollegeDropout_json_data$personality[[5]][5][[1]][[2]][[4]], 
+                LateRegistration_json_data$personality[[5]][5][[1]][[2]][[4]], 
+                Graduation_json_data$personality[[5]][5][[1]][[2]][[4]], 
+                Heartbreak_json_data$personality[[5]][5][[1]][[2]][[4]],
+                MBDTF_json_data$personality[[5]][5][[1]][[2]][[4]], Yeezus_json_data$personality[[5]][5][[1]][[2]][[4]], 
+                TLOP_json_data$personality[[5]][5][[1]][[2]][[4]])
+
+Melancholy<- c(CollegeDropout_json_data$personality[[5]][5][[1]][[3]][[4]], 
+                LateRegistration_json_data$personality[[5]][5][[1]][[3]][[4]], 
+                Graduation_json_data$personality[[5]][5][[1]][[3]][[4]], 
+                Heartbreak_json_data$personality[[5]][5][[1]][[3]][[4]],
+                MBDTF_json_data$personality[[5]][5][[1]][[3]][[4]], Yeezus_json_data$personality[[5]][5][[1]][[3]][[4]], 
+                TLOP_json_data$personality[[5]][5][[1]][[3]][[4]])
+               
+
+Immoderation<- c(CollegeDropout_json_data$personality[[5]][5][[1]][[4]][[4]], 
+                 LateRegistration_json_data$personality[[5]][5][[1]][[4]][[4]], 
+                 Graduation_json_data$personality[[5]][5][[1]][[4]][[4]], 
+                 Heartbreak_json_data$personality[[5]][5][[1]][[4]][[4]],
+                 MBDTF_json_data$personality[[5]][5][[1]][[4]][[4]], Yeezus_json_data$personality[[5]][5][[1]][[4]][[4]], 
+                 TLOP_json_data$personality[[5]][5][[1]][[4]][[4]])
+
+
+Self_Conscious<- c(CollegeDropout_json_data$personality[[5]][5][[1]][[5]][[4]], 
+                   LateRegistration_json_data$personality[[5]][5][[1]][[5]][[4]], 
+                   Graduation_json_data$personality[[5]][5][[1]][[5]][[4]], 
+                   Heartbreak_json_data$personality[[5]][5][[1]][[5]][[4]],
+                   MBDTF_json_data$personality[[5]][5][[1]][[5]][[4]], Yeezus_json_data$personality[[5]][5][[1]][[5]][[4]], 
+                   TLOP_json_data$personality[[5]][5][[1]][[5]][[4]])
+
+
+Stress<- c(CollegeDropout_json_data$personality[[5]][5][[1]][[6]][[4]], 
+           LateRegistration_json_data$personality[[5]][5][[1]][[6]][[4]], 
+           Graduation_json_data$personality[[5]][5][[1]][[6]][[4]], 
+           Heartbreak_json_data$personality[[5]][5][[1]][[6]][[4]],
+           MBDTF_json_data$personality[[5]][5][[1]][[6]][[4]], Yeezus_json_data$personality[[4]][5][[1]][[6]][[4]], 
+           TLOP_json_data$personality[[5]][5][[1]][[6]][[4]])
+
+Kanye_Neuroticism<- data.frame(Album_name, Fiery, Worry_Prone, Melancholy,
+                                  Immoderation, Self_Conscious, Stress)
+
+Kanye_Neuroticism.long<- melt(Kanye_Neuroticism)
+
+ggplot(Kanye_Neuroticism.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge") + 
+  labs(title="Kanye's Emotional Range", fill= "Album", x= "Emotional Range Facets", y= "Percentile Rank")
+```
+
+
+**Fiery** - Tendency to experience, but not necessarily express, anger or frustration.
+
+**Worry Prone** - Tendency to dwell on difficulty or troubles; easily experience unease or concern.
+
+**Melancholy** - Normal tendency to experience feelings of guilt, sadness, hopelessness, or loneliness. 
+
+**Immoderation** - Tendency to act on cravings and urges rather over resisting them or delaying gratification.
+
+**Self_Conscious** -  Concern with rejection, embarrassment; shyness.
+
+**Stress** - Difficulty in coping with stress or pressure in difficult situations.
+
+
+***
+
+##Some Initial Thoughts
+
+We can see that unsurprisingly that 808's and Heartbreak sets itself apart from the rest of Kanye's work. We can see fromt the Big 5 personality traits it's by far his most agreeable and tends to be an outlier in the other categories, trending closely with Graduation which is the closest album to it chronologically.
+
+All of Kanye's albums rank highly in Artistic Interest, Imagination, Cheerfulness and Thrill Seeking. His albums also rank highly in Orderliness which is not something I expected. 
+
+Perhaps more indicative of the genre than of Kanye himself we observe that his albums consistently rank lower on Modesty, Cautiousness, Dutifulness, Cooperation, Immoderation, Self Consciousness and Trust. In the other personality analyses of rappers that I've done there tends to be low ranking in Agreeableness with Sympathy being the main deviation within that category.
+
+
+
+If you thought this was interesting or want to point something out feel free to post a comment on my Github or anywhere else for that matter. 
