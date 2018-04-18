@@ -76,7 +76,6 @@ ggplot(Kanye.long,aes(variable,value,fill=Album_name))+
 
 ```
 
-
 **Openess** - Openness to experience. Higher: Intellectually curious, emotionally-aware, sensitive to beauty and willing to try new things.
 Lower: Preferring the plain, straightforward, and obvious over the complex, ambiguous, and subtle.
 
@@ -137,12 +136,11 @@ Authority_Challenge<- c(CollegeDropout_json_data$personality[[1]][5][[1]][[6]][[
                         MBDTF_json_data$personality[[1]][5][[1]][[6]][[4]], Yeezus_json_data$personality[[1]][5][[1]][[6]][[4]], 
                         TLOP_json_data$personality[[1]][5][[1]][[6]][[4]])
 
-Kanye_Openness<- data.frame(Album_name, Adventurousness, Artistic_Interest, Emotionality, Imagination, Intellect, 
-                               Authority_Challenge)
+Kanye_Openness1<- data.frame(Album_name, Adventurousness, Artistic_Interest, Emotionality)
 
-Kanye_Openness.long<- melt(Kanye_Openness)
+Kanye_Openness1.long<- melt(Kanye_Openness1)
 
-ggplot(Kanye_Openness.long,aes(variable,value,fill=Album_name))+
+ggplot(Kanye_Openness1.long,aes(variable,value,fill=Album_name))+
   geom_bar(stat="identity",position="dodge")+ 
   labs(title="Kanye's Openness", fill= "Album", x= "Openness Facets", y= "Percentile Rank")
 
@@ -154,6 +152,19 @@ ggplot(Kanye_Openness.long,aes(variable,value,fill=Album_name))+
 **Artistic Interest** - Appreciation for art and beauty, both man made and in nature
 
 **Emotionality** - Emotional availability; awareness of own feelings.
+
+
+```{r Openness 2, echo=FALSE}
+
+Kanye_Openness2<- data.frame(Album_name, Imagination, Intellect, Authority_Challenge)
+
+Kanye_Openness2.long<- melt(Kanye_Openness2)
+
+ggplot(Kanye_Openness2.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge")+ 
+  labs(title="Kanye's Openness", fill= "Album", x= "Openness Facets", y= "Percentile Rank")
+```
+
 
 **Imagination** - Openness to creating an inner world of fantasy
 
@@ -205,22 +216,30 @@ Self_Efficacy<- c(CollegeDropout_json_data$personality[[2]][5][[1]][[6]][[4]],
                   MBDTF_json_data$personality[[2]][5][[1]][[6]][[4]], Yeezus_json_data$personality[[2]][5][[1]][[6]][[4]], 
                   TLOP_json_data$personality[[2]][5][[1]][[6]][[4]])
 
-Kanye_Conscientiousness<- data.frame(Album_name, Achievement_Striving, Cautiousness, Dutifulness, Orderliness,
-                                        Self_Discipline, Self_Efficacy)
+Kanye_Conscientiousness1<- data.frame(Album_name, Achievement_Striving, Cautiousness, Dutifulness)
 
-Kanye_Conscientiousness.long<- melt(Kanye_Conscientiousness)
+Kanye_Conscientiousness1.long<- melt(Kanye_Conscientiousness1)
 
-ggplot(Kanye_Conscientiousness.long,aes(variable,value,fill=Album_name))+
+ggplot(Kanye_Conscientiousness1.long,aes(variable,value,fill=Album_name))+
   geom_bar(stat="identity",position="dodge")+ 
   labs(title="Kanye's Conscientiousness", fill= "Album", x= "Conscientiousness Facets", y= "Percentile Rank")
 ```
-
 
 **Achievement Striving** - The need for personal achievement and sense of direction. 
 
 **Cautiousness** - Tendency to think things through before acting or speaking.
 
 **Dutifulness** - Sense of duty; amount of emphasis placed on fulfilling obligations.
+```{r Conscientiousness 2, echo=FALSE}
+
+Kanye_Conscientiousness2<- data.frame(Album_name, Orderliness, Self_Discipline, Self_Efficacy)
+
+Kanye_Conscientiousness2.long<- melt(Kanye_Conscientiousness2)
+
+ggplot(Kanye_Conscientiousness2.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge")+ 
+  labs(title="Kanye's Conscientiousness", fill= "Album", x= "Conscientiousness Facets", y= "Percentile Rank")
+```
 
 **Orderliness** - Personal organization, tidiness, neatness.
 
@@ -274,12 +293,11 @@ Gregariousness<- c(CollegeDropout_json_data$personality[[3]][5][[1]][[6]][[4]],
                    TLOP_json_data$personality[[3]][5][[1]][[6]][[4]])
 
 
-Kanye_Extraversion<- data.frame(Album_name, Activity, Assertive, Cheerful,
-                                   Thrill_Seeking, Warmth, Gregariousness)
+Kanye_Extraversion1<- data.frame(Album_name, Activity, Assertive, Cheerful)
 
-Kanye_Extraversion.long<- melt(Kanye_Extraversion)
+Kanye_Extraversion1.long<- melt(Kanye_Extraversion1)
 
-ggplot(Kanye_Extraversion.long,aes(variable,value,fill=Album_name))+
+ggplot(Kanye_Extraversion1.long,aes(variable,value,fill=Album_name))+
   geom_bar(stat="identity",position="dodge") + 
   labs(title="Kanye's Extraversion", fill= "Album", x= "Extraversion Facets", y= "Percentile Rank")
 ```
@@ -290,6 +308,16 @@ ggplot(Kanye_Extraversion.long,aes(variable,value,fill=Album_name))+
 **Assertive** - Forcefulness of expression; pursuit of leadership and social ascendancy; desire to direct the activities of others.
 
 **Cheerful** - Tendency to express or experience positive emotions.
+```{r Extraversion 2, echo=FALSE}
+
+Kanye_Extraversion2<- data.frame(Album_name, Thrill_Seeking, Warmth, Gregariousness)
+
+Kanye_Extraversion2.long<- melt(Kanye_Extraversion2)
+
+ggplot(Kanye_Extraversion2.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge") + 
+  labs(title="Kanye's Extraversion", fill= "Album", x= "Extraversion Facets", y= "Percentile Rank")
+```
 
 **Thrill Seeking** -  A need for environmental stimulation.
 
@@ -343,8 +371,7 @@ Trust<- c(CollegeDropout_json_data$personality[[4]][5][[1]][[6]][[4]],
           MBDTF_json_data$personality[[4]][5][[1]][[6]][[4]], Yeezus_json_data$personality[[4]][5][[1]][[6]][[4]], 
           TLOP_json_data$personality[[4]][5][[1]][[6]][[4]])
 
-Kanye_Agreeableness<- data.frame(Album_name, Altruism, Cooperation, Modesty, 
-                                    Uncomprimising, Sympathy, Trust)
+Kanye_Agreeableness<- data.frame(Album_name, Altruism, Cooperation, Modesty)
 
 Kanye_Agreeableness.long<- melt(Kanye_Agreeableness)
 
@@ -359,6 +386,16 @@ ggplot(Kanye_Agreeableness.long,aes(variable,value,fill=Album_name))+
 **Cooperation** - Dislike of confrontations. Responding to interpersonal conflict with a willingness to compromise.
 
 **Modesty** -  Tendency to be unassuming and play down own achievements; humility.
+```{r Agreeableness 2, echo=FALSE}
+
+Kanye_Agreeableness2<- data.frame(Album_name, Uncomprimising, Sympathy, Trust)
+
+Kanye_Agreeableness2.long<- melt(Kanye_Agreeableness2)
+
+ggplot(Kanye_Agreeableness2.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge")+ 
+  labs(title="Kanye's Agreeableness", fill= "Album", x= "Agreeableness Facets", y= "Percentile Rank")
+```
 
 **Uncomprimising** - Frank and genuine in exoression; candid, blunt.
 
@@ -413,12 +450,11 @@ Stress<- c(CollegeDropout_json_data$personality[[5]][5][[1]][[6]][[4]],
            MBDTF_json_data$personality[[5]][5][[1]][[6]][[4]], Yeezus_json_data$personality[[4]][5][[1]][[6]][[4]], 
            TLOP_json_data$personality[[5]][5][[1]][[6]][[4]])
 
-Kanye_Neuroticism<- data.frame(Album_name, Fiery, Worry_Prone, Melancholy,
-                                  Immoderation, Self_Conscious, Stress)
+Kanye_Neuroticism1<- data.frame(Album_name, Fiery, Worry_Prone, Melancholy)
 
-Kanye_Neuroticism.long<- melt(Kanye_Neuroticism)
+Kanye_Neuroticism1.long<- melt(Kanye_Neuroticism1)
 
-ggplot(Kanye_Neuroticism.long,aes(variable,value,fill=Album_name))+
+ggplot(Kanye_Neuroticism1.long,aes(variable,value,fill=Album_name))+
   geom_bar(stat="identity",position="dodge") + 
   labs(title="Kanye's Emotional Range", fill= "Album", x= "Emotional Range Facets", y= "Percentile Rank")
 ```
@@ -429,6 +465,15 @@ ggplot(Kanye_Neuroticism.long,aes(variable,value,fill=Album_name))+
 **Worry Prone** - Tendency to dwell on difficulty or troubles; easily experience unease or concern.
 
 **Melancholy** - Normal tendency to experience feelings of guilt, sadness, hopelessness, or loneliness. 
+```{r Emotional Range 2, echo=FALSE}
+Kanye_Neuroticism2<- data.frame(Album_name, Immoderation, Self_Conscious, Stress)
+
+Kanye_Neuroticism2.long<- melt(Kanye_Neuroticism2)
+
+ggplot(Kanye_Neuroticism2.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge") + 
+  labs(title="Kanye's Emotional Range", fill= "Album", x= "Emotional Range Facets", y= "Percentile Rank")
+```
 
 **Immoderation** - Tendency to act on cravings and urges rather over resisting them or delaying gratification.
 
