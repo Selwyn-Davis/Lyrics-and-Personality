@@ -336,4 +336,172 @@ ggplot(Frank_Neuroticism.long,aes(variable,value,fill=Album_name))+
 
 In a number of categories it appears that Blonde and nostalgia, Ultra are similar to each other with Channel Orange being the outlier. With chronology in mind it appears that in some traits Blonde is a synthesis of his first two projects, landing much closer to nostalgia, Ultra. Channel Orange is particularly atypical in its Extraversion, Emotional Range and Openness. 
 
-Frank ranks highly in Thrill Seeking, Sympathy, Imagination, Thrill Seeking and Artistic Interest. 
+Frank ranks highly in Thrill Seeking, Sympathy, Imagination, Thrill Seeking and Artistic Interest.
+
+***
+
+I was able to put this article together pretty quickly so I thought it'd be interesting to look into more of the information provided by the Personality Insights Tool. Now we'll be taking a look at Consumer Needs. Research literature suggests that several types of human needs are universal and directly influence consumer behavior. The twelve categories of needs that are reported by the service are described in marketing literature as desires that a person hopes to fulfill when considering a product or service.
+
+```{r Consumer Needs 1, echo=FALSE}
+
+Challenge<- c(nostalgiaUltra_json_data$needs[[1]][[4]], 
+          ChannelOrange_json_data$needs[[1]][[4]], 
+          Blonde_json_data$needs[[1]][[4]])
+
+Closeness<- c(nostalgiaUltra_json_data$needs[[2]][[4]], 
+                   ChannelOrange_json_data$needs[[2]][[4]], 
+                   Blonde_json_data$needs[[2]][[4]])
+
+Curiosity<- c(nostalgiaUltra_json_data$needs[[3]][[4]], 
+               ChannelOrange_json_data$needs[[3]][[4]], 
+               Blonde_json_data$needs[[3]][[4]])
+
+Excitement<- c(nostalgiaUltra_json_data$needs[[4]][[4]], 
+                 ChannelOrange_json_data$needs[[4]][[4]], 
+                 Blonde_json_data$needs[[4]][[4]])
+
+
+Harmony<- c(nostalgiaUltra_json_data$needs[[5]][[4]], 
+                       ChannelOrange_json_data$needs[[5]][[4]], 
+                       Blonde_json_data$needs[[5]][[4]])
+
+Ideal<- c(nostalgiaUltra_json_data$needs[[6]][[4]], 
+                       ChannelOrange_json_data$needs[[6]][[4]], 
+                       Blonde_json_data$needs[[6]][[4]])
+
+
+Liberty<- c(nostalgiaUltra_json_data$needs[[7]][[4]], 
+                       ChannelOrange_json_data$needs[[7]][[4]], 
+                       Blonde_json_data$needs[[7]][[4]])
+
+Love<- c(nostalgiaUltra_json_data$needs[[8]][[4]], 
+                       ChannelOrange_json_data$needs[[8]][[4]], 
+                       Blonde_json_data$needs[[8]][[4]])
+
+Practicality<- c(nostalgiaUltra_json_data$needs[[9]][[4]], 
+                       ChannelOrange_json_data$needs[[9]][[4]], 
+                       Blonde_json_data$needs[[9]][[4]])
+
+Self_Expression<- c(nostalgiaUltra_json_data$needs[[10]][[4]], 
+                       ChannelOrange_json_data$needs[[10]][[4]], 
+                       Blonde_json_data$needs[[10]][[4]])
+
+Stability<- c(nostalgiaUltra_json_data$needs[[11]][[4]], 
+                       ChannelOrange_json_data$needs[[11]][[4]], 
+                       Blonde_json_data$needs[[11]][[4]])
+
+Structure<- c(nostalgiaUltra_json_data$needs[[12]][[4]], 
+                       ChannelOrange_json_data$needs[[12]][[4]], 
+                       Blonde_json_data$needs[[12]][[4]])
+
+
+Frank_Needs1<- data.frame(Album_name, Challenge, Closeness, Curiosity, Excitement, Harmony, Ideal)
+
+Frank_Needs1.long<- melt(Frank_Needs1)
+
+ggplot(Frank_Needs1.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge") + 
+  labs(title="Frank's Consumer Needs", fill= "Album", x= "Consumer Needs", y= "Percentile Rank")
+
+```
+
+
+**Challenge** - A desire to achieve, succeed, compete, or pursue experiences that test one's abilities.
+
+**Closeness** - A need to nurture or be nurtured; a feeling of belonging.
+
+**Curiosity** - A need to pursue experiences that foster learning, exploration, and growth. 
+
+**Excitement** -A need to pursue experiences or lead a lifestyle that arouses enthusiasm and eagerness.
+
+**Harmony** -  A need to appreciate or please other people, their viewpoints, and feelings.
+
+**Ideal** - A desire to satisfy one's idea of perfection in a lifestyle or experience, oftentimes seen as pursuing a sense of community.
+
+
+```{r Consumer Needs 2, echo=FALSE}
+Frank_Needs2<- data.frame(Album_name, Liberty, Love, Practicality, Self_Expression, Stability,
+                          Structure)
+
+Frank_Needs2.long<- melt(Frank_Needs2)
+
+ggplot(Frank_Needs2.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge") + 
+  labs(title="Frank's Consumer Needs", fill= "Album", x= "Consumer Needs", y= "Percentile Rank")
+```
+
+
+**Liberty** - A need to escape, a desire for new experiences, new things.
+
+**Love** - Social contact, whether one-to-one or one-to-many.
+
+**Practicality** - A desire for getting the job done, skill, and efficiency.
+
+**Self Expression** -A desire to discover and assert one's identity.
+
+**Stability** -  A need for the sensible, tried and tested, with a good track record and a known history.
+
+**Structure** - A need for organization, planning, and things that have a clear purpose.
+
+***
+
+
+##More Thoughts
+
+We can see that Frank's consumer needs stay pretty consistent except in 3 categories; Practicalaity and Structure which both show a trend upwards with each new album as well as Challenge where it has increased from his first to last album, but takes a dip for Channel Orange. 
+
+***
+
+Now we're going to take a look at Values. Values convey what is most important to an individual. They are "desirable, trans-situational goals, varying in importance, that serve as guiding principles in people's lives". Five features that are common to all values: (1) values are beliefs; (2) values are a motivational construct; (3) values transcend specific actions and situations; (4) values guide the selection or evaluation of actions, policies, people, and events; and (5) values vary by relative importance and can be ranked accordingly. The service computes the five basic human values proposed by Schwartz and validated in more than twenty countries (Schwartz, 1992).
+
+
+```{r Values, echo=FALSE}
+
+Tradition<- c(nostalgiaUltra_json_data$values[[1]][[4]], 
+          ChannelOrange_json_data$values[[1]][[4]], 
+          Blonde_json_data$values[[1]][[4]])
+
+Stimulation<- c(nostalgiaUltra_json_data$values[[2]][[4]], 
+                   ChannelOrange_json_data$values[[2]][[4]], 
+                   Blonde_json_data$values[[2]][[4]])
+
+Hedonism<- c(nostalgiaUltra_json_data$values[[3]][[4]], 
+               ChannelOrange_json_data$values[[3]][[4]], 
+               Blonde_json_data$values[[3]][[4]])
+
+Achievement<- c(nostalgiaUltra_json_data$values[[4]][[4]], 
+                 ChannelOrange_json_data$values[[4]][[4]], 
+                 Blonde_json_data$values[[4]][[4]])
+
+Transcendence<- c(nostalgiaUltra_json_data$values[[5]][[4]], 
+                       ChannelOrange_json_data$values[[5]][[4]], 
+                       Blonde_json_data$values[[5]][[4]])
+
+
+
+Frank_Values<- data.frame(Album_name, Tradition, Stimulation, Hedonism, Achievement, Transcendence)
+
+Frank_Values.long<- melt(Frank_Values)
+
+ggplot(Frank_Values.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge") + 
+  labs(title="Frank's Values", fill= "Album", x= "Values", y= "Percentile Rank")
+
+```
+
+**Tradition/Conservation** - Respect, commitment, and acceptance of the customs and ideas that one's culture and/or religion provides.
+
+**Stimulation/ Openness to Change** - Excitement, novelty, and challenge in life.
+
+**Hedonism/Taking Pleasure in Life** - Pleasure or sensuous gratification for oneself.
+
+**Achievement/Self-Enhancement** - Personal success through demonstrating competence according to social standards.
+
+**Self-Transcendence/Helping Others** -  Preserving and enhancing the welfare of those with whom one is in frequent personal contact.
+
+
+***
+
+###Even More Thoughts
+
+Frank Ocean ranks highest in the Stimulation value consistently across his albums. More interesting is again to see the trend upwards with each album in the Tradition and Achievement values. Signaling a type of growth Frank Ocean seems to reaching for as his career continues. We can only see if it holds true of his next body of work. 
