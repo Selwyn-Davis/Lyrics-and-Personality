@@ -39,8 +39,10 @@ Emotional_range<- c(CollegeDropout_json_data$personality[[5]][4][[1]], LateRegis
                     TLOP_json_data$personality[[5]][4][[1]])
 
 
-Album_name= c("College Dropout", "Late Registration", "Graduation", "808's & Heartbreak", "My Beautiful Dark Twisted Fantasy",
-              "Yeezus", "The Life of Pablo")
+Album_name= factor(c("College Dropout", "Late Registration", "Graduation", "808's & Heartbreak", "My Beautiful Dark Twisted Fantasy",
+              "Yeezus", "The Life of Pablo"))
+
+Album_name= factor(Album_name, levels(Album_name)[c(2,4,3,1,5,7,6)])
 
 Kanye_Big5<- data.frame(Album_name, Openness, Conscientiousness, Extraversion, Agreeableness, Emotional_range)
 
@@ -182,7 +184,7 @@ Thrill_Seeking<- c(CollegeDropout_json_data$personality[[3]][5][[1]][[4]][[4]],
                    TLOP_json_data$personality[[3]][5][[1]][[4]][[4]])
 
 
-Outgoing<- c(CollegeDropout_json_data$personality[[3]][5][[1]][[5]][[4]], 
+Warmth<- c(CollegeDropout_json_data$personality[[3]][5][[1]][[5]][[4]], 
              LateRegistration_json_data$personality[[3]][5][[1]][[5]][[4]], 
              Graduation_json_data$personality[[3]][5][[1]][[5]][[4]], 
              Heartbreak_json_data$personality[[3]][5][[1]][[5]][[4]],
@@ -313,3 +315,170 @@ Kanye_Neuroticism.long<- melt(Kanye_Neuroticism)
 ggplot(Kanye_Neuroticism.long,aes(variable,value,fill=Album_name))+
   geom_bar(stat="identity",position="dodge") + 
   labs(title="Kanye's Emotional Range", fill= "Album", x= "Emotional Range Facets", y= "Percentile Rank")
+
+
+Challenge<- c(CollegeDropout_json_data$needs[[1]][[4]], 
+              LateRegistration_json_data$needs[[1]][[4]], 
+              Graduation_json_data$needs[[1]][[4]], 
+              Heartbreak_json_data$needs[[1]][[4]],
+              MBDTF_json_data$needs[[1]][[4]],
+              Yeezus_json_data$needs[[1]][[4]], 
+              TLOP_json_data$needs[[1]][[4]])
+
+Closeness<- c(CollegeDropout_json_data$needs[[2]][[4]], 
+              LateRegistration_json_data$needs[[2]][[4]], 
+              Graduation_json_data$needs[[2]][[4]], 
+              Heartbreak_json_data$needs[[2]][[4]],
+              MBDTF_json_data$needs[[2]][[4]],
+              Yeezus_json_data$needs[[2]][[4]], 
+              TLOP_json_data$needs[[2]][[4]])
+
+Curiosity<- c(CollegeDropout_json_data$needs[[3]][[4]], 
+              LateRegistration_json_data$needs[[3]][[4]], 
+              Graduation_json_data$needs[[3]][[4]], 
+              Heartbreak_json_data$needs[[3]][[4]],
+              MBDTF_json_data$needs[[3]][[4]],
+              Yeezus_json_data$needs[[3]][[4]], 
+              TLOP_json_data$needs[[3]][[4]])
+
+Excitement<- c(CollegeDropout_json_data$needs[[4]][[4]], 
+               LateRegistration_json_data$needs[[4]][[4]], 
+               Graduation_json_data$needs[[4]][[4]], 
+               Heartbreak_json_data$needs[[4]][[4]],
+               MBDTF_json_data$needs[[4]][[4]],
+               Yeezus_json_data$needs[[4]][[4]], 
+               TLOP_json_data$needs[[4]][[4]])
+
+
+Harmony<- c(CollegeDropout_json_data$needs[[5]][[4]], 
+            LateRegistration_json_data$needs[[5]][[4]], 
+            Graduation_json_data$needs[[5]][[4]], 
+            Heartbreak_json_data$needs[[5]][[4]],
+            MBDTF_json_data$needs[[5]][[4]],
+            Yeezus_json_data$needs[[5]][[4]], 
+            TLOP_json_data$needs[[5]][[4]])
+
+Ideal<- c(CollegeDropout_json_data$needs[[6]][[4]], 
+          LateRegistration_json_data$needs[[6]][[4]], 
+          Graduation_json_data$needs[[6]][[4]], 
+          Heartbreak_json_data$needs[[6]][[4]],
+          MBDTF_json_data$needs[[6]][[4]],
+          Yeezus_json_data$needs[[6]][[4]], 
+          TLOP_json_data$needs[[6]][[4]])
+
+
+Liberty<- c(CollegeDropout_json_data$needs[[7]][[4]], 
+            LateRegistration_json_data$needs[[7]][[4]], 
+            Graduation_json_data$needs[[7]][[4]], 
+            Heartbreak_json_data$needs[[7]][[4]],
+            MBDTF_json_data$needs[[7]][[4]],
+            Yeezus_json_data$needs[[7]][[4]], 
+            TLOP_json_data$needs[[7]][[4]])
+
+Love<- c(CollegeDropout_json_data$needs[[8]][[4]], 
+         LateRegistration_json_data$needs[[8]][[4]], 
+         Graduation_json_data$needs[[8]][[4]], 
+         Heartbreak_json_data$needs[[8]][[4]],
+         MBDTF_json_data$needs[[8]][[4]],
+         Yeezus_json_data$needs[[8]][[4]], 
+         TLOP_json_data$needs[[8]][[4]])
+
+Practicality<- c(CollegeDropout_json_data$needs[[9]][[4]], 
+                 LateRegistration_json_data$needs[[9]][[4]], 
+                 Graduation_json_data$needs[[9]][[4]], 
+                 Heartbreak_json_data$needs[[9]][[4]],
+                 MBDTF_json_data$needs[[9]][[4]],
+                 Yeezus_json_data$needs[[9]][[4]], 
+                 TLOP_json_data$needs[[9]][[4]])
+
+Self_Expression<- c(CollegeDropout_json_data$needs[[10]][[4]], 
+                    LateRegistration_json_data$needs[[10]][[4]], 
+                    Graduation_json_data$needs[[10]][[4]], 
+                    Heartbreak_json_data$needs[[10]][[4]],
+                    MBDTF_json_data$needs[[10]][[4]],
+                    Yeezus_json_data$needs[[10]][[4]], 
+                    TLOP_json_data$needs[[10]][[4]])
+
+Stability<- c(CollegeDropout_json_data$needs[[11]][[4]], 
+              LateRegistration_json_data$needs[[11]][[4]], 
+              Graduation_json_data$needs[[11]][[4]], 
+              Heartbreak_json_data$needs[[11]][[4]],
+              MBDTF_json_data$needs[[11]][[4]],
+              Yeezus_json_data$needs[[11]][[4]], 
+              TLOP_json_data$needs[[11]][[4]])
+
+Structure<- c(CollegeDropout_json_data$needs[[12]][[4]], 
+              LateRegistration_json_data$needs[[12]][[4]], 
+              Graduation_json_data$needs[[12]][[4]], 
+              Heartbreak_json_data$needs[[12]][[4]],
+              MBDTF_json_data$needs[[12]][[4]],
+              Yeezus_json_data$needs[[12]][[4]], 
+              TLOP_json_data$needs[[12]][[4]])
+
+
+Kanye_Needs1<- data.frame(Album_name, Challenge, Closeness, Curiosity, Excitement, Harmony, Ideal)
+
+Kanye_Needs1.long<- melt(Kanye_Needs1)
+
+ggplot(Kanye_Needs1.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge") + 
+  labs(title="Kanye's Consumer Needs", fill= "Album", x= "Consumer Needs", y= "Percentile Rank")
+
+Kanye_Needs2<- data.frame(Album_name, Liberty, Love, Practicality, Self_Expression, Stability,
+                          Structure)
+
+Kanye_Needs2.long<- melt(Kanye_Needs2)
+
+ggplot(Kanye_Needs2.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge") + 
+  labs(title="Kanye's Consumer Needs", fill= "Album", x= "Consumer Needs", y= "Percentile Rank")
+
+Tradition<- c(CollegeDropout_json_data$needs[[1]][[4]], 
+              LateRegistration_json_data$needs[[1]][[4]], 
+              Graduation_json_data$needs[[1]][[4]], 
+              Heartbreak_json_data$needs[[1]][[4]],
+              MBDTF_json_data$needs[[1]][[4]],
+              Yeezus_json_data$needs[[1]][[4]], 
+              TLOP_json_data$needs[[1]][[4]])
+
+Stimulation<- c(CollegeDropout_json_data$needs[[2]][[4]], 
+                LateRegistration_json_data$needs[[2]][[4]], 
+                Graduation_json_data$needs[[2]][[4]], 
+                Heartbreak_json_data$needs[[2]][[4]],
+                MBDTF_json_data$needs[[2]][[4]],
+                Yeezus_json_data$needs[[2]][[4]], 
+                TLOP_json_data$needs[[2]][[4]])
+
+Hedonism<- c(CollegeDropout_json_data$needs[[3]][[4]], 
+             LateRegistration_json_data$needs[[3]][[4]], 
+             Graduation_json_data$needs[[3]][[4]], 
+             Heartbreak_json_data$needs[[3]][[4]],
+             MBDTF_json_data$needs[[3]][[4]],
+             Yeezus_json_data$needs[[3]][[4]], 
+             TLOP_json_data$needs[[3]][[4]])
+
+Achievement<- c(CollegeDropout_json_data$needs[[4]][[4]], 
+                LateRegistration_json_data$needs[[4]][[4]], 
+                Graduation_json_data$needs[[4]][[4]], 
+                Heartbreak_json_data$needs[[4]][[4]],
+                MBDTF_json_data$needs[[4]][[4]],
+                Yeezus_json_data$needs[[4]][[4]], 
+                TLOP_json_data$needs[[4]][[4]])
+
+Transcendence<- c(CollegeDropout_json_data$needs[[5]][[4]], 
+                  LateRegistration_json_data$needs[[5]][[4]], 
+                  Graduation_json_data$needs[[5]][[4]], 
+                  Heartbreak_json_data$needs[[5]][[4]],
+                  MBDTF_json_data$needs[[5]][[4]],
+                  Yeezus_json_data$needs[[5]][[4]], 
+                  TLOP_json_data$needs[[5]][[4]])
+
+
+
+Kanye_Values<- data.frame(Album_name, Tradition, Stimulation, Hedonism, Achievement, Transcendence)
+
+Kanye_Values.long<- melt(Kanye_Values)
+
+ggplot(Kanye_Values.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge") + 
+  labs(title="Kanye's Values", fill= "Album", x= "Values", y= "Percentile Rank")

@@ -15,7 +15,7 @@ library(reshape2)
 Section80_json_data<- fromJSON(file= 'Section80.json')
 GoodKidMaadCity_json_data<- fromJSON(file= 'GoodKidMaadCity.json')
 ToPimpAButterfly_json_data<- fromJSON(file= 'ToPimpAButterfly.json')
-Damn_json_data<- fromJSON(file= 'DAMN.json')
+Damn_json_data<- fromJSON(file= 'Damn.json')
 
 
 
@@ -34,7 +34,9 @@ Agreeableness<- c(Section80_json_data$personality[[4]][4][[1]], GoodKidMaadCity_
 Emotional_range<- c(Section80_json_data$personality[[5]][4][[1]], GoodKidMaadCity_json_data$personality[[5]][4][[1]], 
                   ToPimpAButterfly_json_data$personality[[5]][4][[1]], Damn_json_data$personality[[5]][4][[1]])
 
-Album_name= c("Section 80", "Good Kid Maad City", "To Pimp A Butterfly", "Damn")
+Album_name= factor(c("Section 80", "Good Kid Maad City", "To Pimp A Butterfly", "Damn"))
+
+Album_name= factor(Album_name, levels(Album_name)[c(3,2,4,1)])
 
 Kendrick_Big5<- data.frame(Album_name, Openness, Conscientiousness, Extraversion, Agreeableness, Emotional_range)
 
@@ -134,7 +136,7 @@ This time I might put you down
 Last time I ain't give a fuck, I still feel the same now  
 My feelings might go numb, you're dealing with cold thumb  
 
---- *Pride, DAMN*
+--- *Pride, Damn*
 
 ***
 
@@ -148,7 +150,7 @@ ggplot(Kendrick.long,aes(variable,value,fill=Album_name))+
 
 ```
 
-There's a lot of consistency acorss albums for Openness and Extraversion, but notice the clear split in the other categories. There's a striking similarity between Kendrick's first album, Section 80, and his latest album, DAMN. Let's look at a breakdown of those traits and see if we can find anything interesting there.
+There's a lot of consistency acorss albums for Openness and Extraversion, but notice the clear split in the other categories. There's a striking similarity between Kendrick's first album, Section 80, and his latest album, Damn. Let's look at a breakdown of those traits and see if we can find anything interesting there.
 
 Here we have Conscientiousness.
 
@@ -196,7 +198,7 @@ ggplot(Kendrick_Conscientiousness.long,aes(variable,value,fill=Album_name))+
 ```
 
 
-In terms of Conscientiousness what sets the personality of Section 80 and DAMN apart from his other albums is Achievement Striving, the need for personal achievemnt or sense of direction, and Self-Discipline, a measure of will power or the capacity to begin tasks and see them through to completiion despite distractions or boredom.
+In terms of Conscientiousness what sets the personality of Section 80 and Damn apart from his other albums is Achievement Striving, the need for personal achievemnt or sense of direction, and Self-Discipline, a measure of will power or the capacity to begin tasks and see them through to completiion despite distractions or boredom.
 
 
 
@@ -245,7 +247,7 @@ ggplot(Kendrick_Agreeableness.long,aes(variable,value,fill=Album_name))+
 
 ```
 
-Agreeableness is where Kendrick Lamar's albums rank lowest and we can see that Section 80 and DAMN rank lower in every facet of Agreeableness than his other two albums.  
+Agreeableness is where Kendrick Lamar's albums rank lowest and we can see that Section 80 and Damn rank lower in every facet of Agreeableness than his other two albums.  
 
 ***
 
@@ -410,3 +412,176 @@ ggplot(Kendrick_Extraversion.long,aes(variable,value,fill=Album_name))+
 ```
 
 
+***
+
+###Bonus Stuff
+
+
+Now we'll be taking a look at Consumer Needs. Research literature suggests that several types of human needs are universal and directly influence consumer behavior. The twelve categories of needs that are reported by the service are described in marketing literature as desires that a person hopes to fulfill when considering a product or service.
+
+```{r Consumer Needs 1, echo=FALSE}
+
+Challenge<- c(Section80_json_data$needs[[1]][[4]], 
+              GoodKidMaadCity_json_data$needs[[1]][[4]], 
+              ToPimpAButterfly_json_data$needs[[1]][[4]], 
+              Damn_json_data$needs[[1]][[4]])
+
+Closeness<- c(Section80_json_data$needs[[2]][[4]], 
+              GoodKidMaadCity_json_data$needs[[2]][[4]], 
+              ToPimpAButterfly_json_data$needs[[2]][[4]], 
+              Damn_json_data$needs[[2]][[4]])
+
+Curiosity<- c(Section80_json_data$needs[[3]][[4]], 
+              GoodKidMaadCity_json_data$needs[[3]][[4]], 
+              ToPimpAButterfly_json_data$needs[[3]][[4]], 
+              Damn_json_data$needs[[3]][[4]])
+
+Excitement<- c(Section80_json_data$needs[[4]][[4]], 
+              GoodKidMaadCity_json_data$needs[[4]][[4]], 
+              ToPimpAButterfly_json_data$needs[[4]][[4]], 
+              Damn_json_data$needs[[4]][[4]])
+
+
+Harmony<- c(Section80_json_data$needs[[5]][[4]], 
+            GoodKidMaadCity_json_data$needs[[5]][[4]], 
+            ToPimpAButterfly_json_data$needs[[5]][[4]], 
+            Damn_json_data$needs[[5]][[4]])
+
+Ideal<- c(Section80_json_data$needs[[6]][[4]], 
+          GoodKidMaadCity_json_data$needs[[6]][[4]], 
+          ToPimpAButterfly_json_data$needs[[6]][[4]], 
+          Damn_json_data$needs[[6]][[4]])
+
+
+Liberty<- c(Section80_json_data$needs[[7]][[4]], 
+          GoodKidMaadCity_json_data$needs[[7]][[4]], 
+          ToPimpAButterfly_json_data$needs[[7]][[4]], 
+          Damn_json_data$needs[[7]][[4]])
+
+Love<- c(Section80_json_data$needs[[8]][[4]], 
+        GoodKidMaadCity_json_data$needs[[8]][[4]], 
+        ToPimpAButterfly_json_data$needs[[8]][[4]], 
+        Damn_json_data$needs[[8]][[4]])
+
+Practicality<- c(Section80_json_data$needs[[9]][[4]], 
+                GoodKidMaadCity_json_data$needs[[9]][[4]], 
+                ToPimpAButterfly_json_data$needs[[9]][[4]], 
+                Damn_json_data$needs[[9]][[4]])
+
+Self_Expression<- c(Section80_json_data$needs[[10]][[4]], 
+                    GoodKidMaadCity_json_data$needs[[10]][[4]], 
+                    ToPimpAButterfly_json_data$needs[[10]][[4]], 
+                    Damn_json_data$needs[[10]][[4]])
+
+Stability<- c(Section80_json_data$needs[[11]][[4]], 
+              GoodKidMaadCity_json_data$needs[[11]][[4]], 
+              ToPimpAButterfly_json_data$needs[[11]][[4]], 
+              Damn_json_data$needs[[11]][[4]])
+
+Structure<- c(Section80_json_data$needs[[12]][[4]], 
+          GoodKidMaadCity_json_data$needs[[12]][[4]], 
+          ToPimpAButterfly_json_data$needs[[12]][[4]], 
+          Damn_json_data$needs[[12]][[4]])
+
+
+Kendrick_Needs1<- data.frame(Album_name, Challenge, Closeness, Curiosity, Excitement, Harmony, Ideal)
+
+Kendrick_Needs1.long<- melt(Kendrick_Needs1)
+
+ggplot(Kendrick_Needs1.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge") + 
+  labs(title="Kendrick's Consumer Needs", fill= "Album", x= "Consumer Needs", y= "Percentile Rank")
+
+```
+
+**Challenge** - A desire to achieve, succeed, compete, or pursue experiences that test one's abilities.
+
+**Closeness** - A need to nurture or be nurtured; a feeling of belonging.
+
+**Curiosity** - A need to pursue experiences that foster learning, exploration, and growth. 
+
+**Excitement** -A need to pursue experiences or lead a lifestyle that arouses enthusiasm and eagerness.
+
+**Harmony** -  A need to appreciate or please other people, their viewpoints, and feelings.
+
+**Ideal** - A desire to satisfy one's idea of perfection in a lifestyle or experience, oftentimes seen as pursuing a sense of community.
+
+
+```{r Consumer Needs 2, echo=FALSE}
+Kendrick_Needs2<- data.frame(Album_name, Liberty, Love, Practicality, Self_Expression, Stability,
+                          Structure)
+
+Kendrick_Needs2.long<- melt(Kendrick_Needs2)
+
+ggplot(Kendrick_Needs2.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge") + 
+  labs(title="Kendrick's Consumer Needs", fill= "Album", x= "Consumer Needs", y= "Percentile Rank")
+```
+
+**Liberty** - A need to escape, a desire for new experiences, new things.
+
+**Love** - Social contact, whether one-to-one or one-to-many.
+
+**Practicality** - A desire for getting the job done, skill, and efficiency.
+
+**Self Expression** -A desire to discover and assert one's identity.
+
+**Stability** -  A need for the sensible, tried and tested, with a good track record and a known history.
+
+**Structure** - A need for organization, planning, and things that have a clear purpose.
+
+***
+
+Now we're going to take a look at Values. Values convey what is most important to an individual. They are "desirable, trans-situational goals, varying in importance, that serve as guiding principles in people's lives". Five features that are common to all values: (1) values are beliefs; (2) values are a motivational construct; (3) values transcend specific actions and situations; (4) values guide the selection or evaluation of actions, policies, people, and events; and (5) values vary by relative importance and can be ranked accordingly. The service computes the five basic human values proposed by Schwartz and validated in more than twenty countries (Schwartz, 1992).
+
+```{r Values, echo=FALSE}
+
+Tradition<- c(Section80_json_data$needs[[1]][[4]], 
+              GoodKidMaadCity_json_data$needs[[1]][[4]], 
+              ToPimpAButterfly_json_data$needs[[1]][[4]], 
+              Damn_json_data$needs[[1]][[4]])
+
+Stimulation<- c(Section80_json_data$needs[[2]][[4]], 
+              GoodKidMaadCity_json_data$needs[[2]][[4]], 
+              ToPimpAButterfly_json_data$needs[[2]][[4]], 
+              Damn_json_data$needs[[2]][[4]])
+
+Hedonism<- c(Section80_json_data$needs[[3]][[4]], 
+            GoodKidMaadCity_json_data$needs[[3]][[4]], 
+            ToPimpAButterfly_json_data$needs[[3]][[4]], 
+            Damn_json_data$needs[[3]][[4]])
+
+Achievement<- c(Section80_json_data$needs[[4]][[4]], 
+              GoodKidMaadCity_json_data$needs[[4]][[4]], 
+              ToPimpAButterfly_json_data$needs[[4]][[4]], 
+              Damn_json_data$needs[[4]][[4]])
+
+Transcendence<- c(Section80_json_data$needs[[5]][[4]], 
+                GoodKidMaadCity_json_data$needs[[5]][[4]], 
+                ToPimpAButterfly_json_data$needs[[5]][[4]], 
+                Damn_json_data$needs[[5]][[4]])
+
+
+
+Kendrick_Values<- data.frame(Album_name, Tradition, Stimulation, Hedonism, Achievement, Transcendence)
+
+Kendrick_Values.long<- melt(Kendrick_Values)
+
+ggplot(Kendrick_Values.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge") + 
+  labs(title="Kendrick's Values", fill= "Album", x= "Values", y= "Percentile Rank")
+
+```
+
+**Tradition/Conservation** - Respect, commitment, and acceptance of the customs and ideas that one's culture and/or religion provides.
+
+**Stimulation/ Openness to Change** - Excitement, novelty, and challenge in life.
+
+**Hedonism/Taking Pleasure in Life** - Pleasure or sensuous gratification for oneself.
+
+**Achievement/Self-Enhancement** - Personal success through demonstrating competence according to social standards.
+
+**Self-Transcendence/Helping Others** -  Preserving and enhancing the welfare of those with whom one is in frequent personal contact.
+
+
+***

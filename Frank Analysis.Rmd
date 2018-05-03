@@ -47,7 +47,9 @@ Agreeableness<- c(nostalgiaUltra_json_data$personality[[4]][4][[1]], ChannelOran
 Emotional_range<- c(nostalgiaUltra_json_data$personality[[5]][4][[1]], ChannelOrange_json_data$personality[[5]][4][[1]], 
                     Blonde_json_data$personality[[5]][4][[1]])
 
-Album_name= c("nostalgia, Ultra", "Channel Orange", "Blonde")
+Album_name= factor(c("nostalgia, Ultra", "Channel Orange", "Blonde"))
+
+Album_name= factor(Album_name, levels(Album_name)[c(3,2,1)])
 
 Frank_Big5<- data.frame(Album_name, Openness, Conscientiousness, Extraversion, Agreeableness, Emotional_range)
 
@@ -272,7 +274,7 @@ ggplot(Frank_Agreeableness.long,aes(variable,value,fill=Album_name))+
 
 **Modesty** -  Tendency to be unassuming and play down own achievements; humility.
 
-**Uncomprimising** - Frank and genuine in exoression; candid, blunt.
+**Uncomprimising** - Frank and genuine in expression; candid, blunt.
 
 **Sympathy** - Attitude of compassion for others; kindness.
 
