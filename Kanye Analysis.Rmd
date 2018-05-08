@@ -36,8 +36,10 @@ Disclaimer: Keep in mind that this analysis is looking purely at word choice and
 That should be enough of an intro so let's take a look!
 
 ```{r Big 5, echo= FALSE}
-Openness<- c(CollegeDropout_json_data$personality[[1]][4][[1]], LateRegistration_json_data$personality[[1]][4][[1]], 
-             Graduation_json_data$personality[[1]][4][[1]], Heartbreak_json_data$personality[[1]][4][[1]],
+Openness<- c(CollegeDropout_json_data$personality[[1]][4][[1]],
+             LateRegistration_json_data$personality[[1]][4][[1]], 
+             Graduation_json_data$personality[[1]][4][[1]],
+             Heartbreak_json_data$personality[[1]][4][[1]],
              MBDTF_json_data$personality[[1]][4][[1]], Yeezus_json_data$personality[[1]][4][[1]], 
              TLOP_json_data$personality[[1]][4][[1]])
 
