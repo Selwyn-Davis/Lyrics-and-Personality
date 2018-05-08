@@ -663,3 +663,16 @@ ggplot(Taylor_Values.long,aes(variable,value,fill=Album_name))+
   geom_bar(stat="identity",position="dodge") + 
   labs(title="Taylor's Values", fill= "Album", x= "Values", y= "Percentile Rank")
 ```
+
+
+**Tradition/Conservation** - Respect, commitment, and acceptance of the customs and ideas that one's culture and/or religion provides.
+
+**Stimulation/ Openness to Change** - Excitement, novelty, and challenge in life.
+
+**Hedonism/Taking Pleasure in Life** - Pleasure or sensuous gratification for oneself.
+
+**Achievement/Self-Enhancement** - Personal success through demonstrating competence according to social standards.
+
+**Self-Transcendence/Helping Others** -  Preserving and enhancing the welfare of those with whom one is in frequent personal contact.
+
+***
