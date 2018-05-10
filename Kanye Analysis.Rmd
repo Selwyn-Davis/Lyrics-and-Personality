@@ -434,7 +434,7 @@ ggplot(Kanye_Agreeableness2.long,aes(variable,value,fill=Album_name))+
   labs(title="Kanye's Agreeableness", fill= "Album", x= "Agreeableness Facets", y= "Percentile Rank")
 ```
 
-**Uncomprimising** - Kanye and genuine in expression; candid, blunt.
+**Uncomprimising** - Frank and genuine in expression; candid, blunt.
 
 **Sympathy** - Attitude of compassion for others; kindness.
 
