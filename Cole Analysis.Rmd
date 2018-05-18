@@ -32,7 +32,8 @@ Since a minimum amount of words is necessary for the tool to do it's job and usi
 Disclaimer: Keep in mind that this analysis is looking purely at word choice and doesn't take into account context or musical elements. Therefore this analysis won't tell you the complete story of an artists music or message. This analysis is for fun, one piece of an artist. 
 
 That should be enough of an intro so let's take a look!
-```{r Big 5}
+```{r Big 5, echo=FALSE}
+
 Openness<- c(TheWarmUp_json_data$personality[[1]][4][[1]],
              TheSidelineStory_json_data$personality[[1]][4][[1]], 
              BornSinner_json_data$personality[[1]][4][[1]],
@@ -51,7 +52,8 @@ Extraversion<- c(TheWarmUp_json_data$personality[[3]][4][[1]],
                  TheSidelineStory_json_data$personality[[3]][4][[1]], 
                  BornSinner_json_data$personality[[3]][4][[1]],
                  ForestHillsDrive_json_data$personality[[3]][4][[1]],
-                 YourEyezOnly_json_data$personality[[3]][4][[1]])
+                 YourEyezOnly_json_data$personality[[3]][4][[1]],
+                 KOD_json_data$personality[[3]][4][[1]])
 
 Agreeableness<- c(TheWarmUp_json_data$personality[[4]][4][[1]],
                   TheSidelineStory_json_data$personality[[4]][4][[1]], 
@@ -67,7 +69,10 @@ Emotional_range<- c(TheWarmUp_json_data$personality[[5]][4][[1]],
                     YourEyezOnly_json_data$personality[[5]][4][[1]],
                     KOD_json_data$personality[[5]][4][[1]])
 
-Album_name= c("The Warm Up", "The Sideline Story", "Born Sinner", "2014 Forest Hills Drive", "4 Your Eyez Only", "KOD")
+
+Album_name= factor(c("The Warm Up", "The Sideline Story", "Born Sinner", "2014 Forest Hills Drive", "4 Your Eyez Only", "KOD"))
+
+Album_name= factor(Album_name, levels(Album_name)[c(6,5,3,1,2,4)])
 
 Cole_Big5<- data.frame(Album_name, Openness, Conscientiousness, Extraversion, Agreeableness, Emotional_range)
 
@@ -75,7 +80,8 @@ Cole.long<- melt(Cole_Big5)
 
 ggplot(Cole.long,aes(variable,value,fill=Album_name))+
   geom_bar(stat="identity",position="dodge")+
-  labs(title="Cole's Big 5 Traits", fill= "Album", x= "Personality Traits", y= "Percentile Rank")+scale_x_discrete()
+  labs(title="Cole's Big 5 Traits", fill= "Album", x= "Personality Traits", y= "Percentile Rank")+
+  ylim(0,1.0)
 ```
 
 **Openess** - Openness to experience. Higher: Intellectually curious, emotionally-aware, sensitive to beauty and willing to try new things.
@@ -144,7 +150,8 @@ Cole_Openness.long<- melt(Cole_Openness)
 
 ggplot(Cole_Openness.long,aes(variable,value,fill=Album_name))+
   geom_bar(stat="identity",position="dodge")+ 
-  labs(title="Cole's Openness", fill= "Album", x= "Openness Facets", y= "Percentile Rank")
+  labs(title="Cole's Openness", fill= "Album", x= "Openness Facets", y= "Percentile Rank")+
+  ylim(0,1.0)
 ```
 
 
@@ -162,7 +169,8 @@ Cole_Openness2.long<- melt(Cole_Openness2)
 
 ggplot(Cole_Openness2.long,aes(variable,value,fill=Album_name))+
   geom_bar(stat="identity",position="dodge")+ 
-  labs(title="Cole's Openness", fill= "Album", x= "Openness Facets", y= "Percentile Rank")
+  labs(title="Cole's Openness", fill= "Album", x= "Openness Facets", y= "Percentile Rank")+
+  ylim(0,1.0)
 ```
 
 
@@ -222,7 +230,7 @@ Cole_Conscientiousness.long<- melt(Cole_Conscientiousness)
 
 ggplot(Cole_Conscientiousness.long,aes(variable,value,fill=Album_name))+
   geom_bar(stat="identity",position="dodge")+ 
-  labs(title="Cole's Conscientiousness", fill= "Album", x= "Conscientiousness Facets", y= "Percentile Rank")
+  labs(title="Cole's Conscientiousness", fill= "Album", x= "Conscientiousness Facets", y= "Percentile Rank")+ ylim(0,1.0)
 ```
 
 
@@ -240,7 +248,7 @@ Cole_Conscientiousness2.long<- melt(Cole_Conscientiousness2)
 
 ggplot(Cole_Conscientiousness2.long,aes(variable,value,fill=Album_name))+
   geom_bar(stat="identity",position="dodge")+ 
-  labs(title="Cole's Conscientiousness", fill= "Album", x= "Conscientiousness Facets", y= "Percentile Rank")
+  labs(title="Cole's Conscientiousness", fill= "Album", x= "Conscientiousness Facets", y= "Percentile Rank")+ ylim(0,1.0)
 ```
 
 **Orderliness** - Personal organization, tidiness, neatness.
@@ -279,7 +287,7 @@ Thrill_Seeking<- c(TheWarmUp_json_data$personality[[3]][5][[1]][[4]][[4]],
                    KOD_json_data$personality[[3]][5][[1]][[4]][[4]])
 
 
-Outgoing<- c(TheWarmUp_json_data$personality[[3]][5][[1]][[5]][[4]], 
+Warmth<- c(TheWarmUp_json_data$personality[[3]][5][[1]][[5]][[4]], 
              TheSidelineStory_json_data$personality[[3]][5][[1]][[5]][[4]], 
              BornSinner_json_data$personality[[3]][5][[1]][[5]][[4]], 
              ForestHillsDrive_json_data$personality[[3]][5][[1]][[5]][[4]],
@@ -300,7 +308,8 @@ Cole_Extraversion.long<- melt(Cole_Extraversion)
 
 ggplot(Cole_Extraversion.long,aes(variable,value,fill=Album_name))+
   geom_bar(stat="identity",position="dodge") + 
-  labs(title="Cole's Extraversion", fill= "Album", x= "Extraversion Facets", y= "Percentile Rank")
+  labs(title="Cole's Extraversion", fill= "Album", x= "Extraversion Facets", y= "Percentile Rank")+
+  ylim(0,1.0)
 ```
 
 **Activity** - Pace of living; level of busyness
@@ -317,7 +326,8 @@ Cole_Extraversion2.long<- melt(Cole_Extraversion2)
 
 ggplot(Cole_Extraversion2.long,aes(variable,value,fill=Album_name))+
   geom_bar(stat="identity",position="dodge") + 
-  labs(title="Cole's Extraversion", fill= "Album", x= "Extraversion Facets", y= "Percentile Rank")
+  labs(title="Cole's Extraversion", fill= "Album", x= "Extraversion Facets", y= "Percentile Rank")+
+  ylim(0,1.0)
 ```
 
 **Thrill Seeking** -  A need for environmental stimulation.
@@ -327,7 +337,8 @@ ggplot(Cole_Extraversion2.long,aes(variable,value,fill=Album_name))+
 **Gregariousness** - Fondness for the company of others; sociability.
 
 ```{r Agreeableness, echo=FALSE}
-Altruism<- c(TheWarmUp_json_data$personality[[4]][5][[1]][[1]][[4]], 
+
+Altruism<- c(TheWarmUp_json_data$personality[[4]][5][[1]][[1]][[4]],
              TheSidelineStory_json_data$personality[[4]][5][[1]][[1]][[4]], 
              BornSinner_json_data$personality[[4]][5][[1]][[1]][[4]], 
              ForestHillsDrive_json_data$personality[[4]][5][[1]][[1]][[4]],
@@ -368,7 +379,7 @@ Trust<- c(TheWarmUp_json_data$personality[[4]][5][[1]][[6]][[4]],
           BornSinner_json_data$personality[[4]][5][[1]][[6]][[4]], 
           ForestHillsDrive_json_data$personality[[4]][5][[1]][[6]][[4]],
           YourEyezOnly_json_data$personality[[4]][5][[1]][[6]][[4]],
-          KOD_json_data$personality[[4]][5][[1]][[6]][[4])
+          KOD_json_data$personality[[4]][5][[1]][[6]][[4]])
 
 Cole_Agreeableness<- data.frame(Album_name, Altruism, Cooperation, Modesty)
 
@@ -376,7 +387,8 @@ Cole_Agreeableness.long<- melt(Cole_Agreeableness)
 
 ggplot(Cole_Agreeableness.long,aes(variable,value,fill=Album_name))+
   geom_bar(stat="identity",position="dodge")+ 
-  labs(title="Cole's Agreeableness", fill= "Album", x= "Agreeableness Facets", y= "Percentile Rank")
+  labs(title="Cole's Agreeableness", fill= "Album", x= "Agreeableness Facets", y= "Percentile Rank")+
+  ylim(0,1.0)
 ```
 
 **Altruism** - Active and genuine concern for the welfare of others.
@@ -393,7 +405,8 @@ Cole_Agreeableness2.long<- melt(Cole_Agreeableness2)
 
 ggplot(Cole_Agreeableness2.long,aes(variable,value,fill=Album_name))+
   geom_bar(stat="identity",position="dodge")+ 
-  labs(title="Cole's Agreeableness", fill= "Album", x= "Agreeableness Facets", y= "Percentile Rank")
+  labs(title="Cole's Agreeableness", fill= "Album", x= "Agreeableness Facets", y= "Percentile Rank")+
+  ylim(0,1.0)
 ```
 
 **Uncomprimising** - Frank and genuine in expression; candid, blunt.
@@ -432,7 +445,7 @@ Immoderation<- c(TheWarmUp_json_data$personality[[5]][5][[1]][[4]][[4]],
                  KOD_json_data$personality[[5]][5][[1]][[4]][[4]])
 
 
-Self_Consciousness<- c(TheWarmUp_json_data$personality[[5]][5][[1]][[5]][[4]], 
+Self_Conscious<- c(TheWarmUp_json_data$personality[[5]][5][[1]][[5]][[4]], 
                        TheSidelineStory_json_data$personality[[5]][5][[1]][[5]][[4]], 
                        BornSinner_json_data$personality[[5]][5][[1]][[5]][[4]], 
                        ForestHillsDrive_json_data$personality[[5]][5][[1]][[5]][[4]],
@@ -452,7 +465,7 @@ Cole_Neuroticism.long<- melt(Cole_Neuroticism)
 
 ggplot(Cole_Neuroticism.long,aes(variable,value,fill=Album_name))+
   geom_bar(stat="identity",position="dodge")+ 
-  labs(title="Cole's Emotional Range", fill= "Album", x= "Emotional Range Facets", y= "Percentile Rank")
+  labs(title="Cole's Emotional Range", fill= "Album", x= "Emotional Range Facets", y= "Percentile Rank")+ ylim(0,1.0)
 ```
 
 **Fiery** - Tendency to experience, but not necessarily express, anger or frustration.
@@ -464,11 +477,11 @@ ggplot(Cole_Neuroticism.long,aes(variable,value,fill=Album_name))+
 ```{r Emotional Range 2, echo=FALSE}
 Cole_Neuroticism2<- data.frame(Album_name, Immoderation, Self_Conscious, Stress)
 
-Cole_Neuroticism2.long<- melt(cole_Neuroticism2)
+Cole_Neuroticism2.long<- melt(Cole_Neuroticism2)
 
-ggplot(cole_Neuroticism2.long,aes(variable,value,fill=Album_name))+
+ggplot(Cole_Neuroticism2.long,aes(variable,value,fill=Album_name))+
   geom_bar(stat="identity",position="dodge") + 
-  labs(title="Cole's Emotional Range", fill= "Album", x= "Emotional Range Facets", y= "Percentile Rank")
+  labs(title="Cole's Emotional Range", fill= "Album", x= "Emotional Range Facets", y= "Percentile Rank")+ ylim(0,1.0)
 ```
 
 **Immoderation** - Tendency to act on cravings and urges rather over resisting them or delaying gratification.
@@ -575,7 +588,8 @@ cole_Needs1.long<- melt(cole_Needs1)
 
 ggplot(cole_Needs1.long,aes(variable,value,fill=Album_name))+
   geom_bar(stat="identity",position="dodge") + 
-  labs(title="cole's Consumer Needs", fill= "Album", x= "Consumer Needs", y= "Percentile Rank")
+  labs(title="cole's Consumer Needs", fill= "Album", x= "Consumer Needs", y= "Percentile Rank")+
+  ylim(0,1.0)
 ```
 
 **Challenge** - A desire to achieve, succeed, compete, or pursue experiences that test one's abilities.
@@ -598,7 +612,8 @@ cole_Needs2.long<- melt(cole_Needs2)
 
 ggplot(cole_Needs2.long,aes(variable,value,fill=Album_name))+
   geom_bar(stat="identity",position="dodge") + 
-  labs(title="cole's Consumer Needs", fill= "Album", x= "Consumer Needs", y= "Percentile Rank")
+  labs(title="cole's Consumer Needs", fill= "Album", x= "Consumer Needs", y= "Percentile Rank")+
+  ylim(0,1.0)
 ```
 
 **Liberty** - A need to escape, a desire for new experiences, new things.
@@ -661,7 +676,8 @@ Cole_Values.long<- melt(Cole_Values)
 
 ggplot(Cole_Values.long,aes(variable,value,fill=Album_name))+
   geom_bar(stat="identity",position="dodge") + 
-  labs(title="Cole's Values", fill= "Album", x= "Values", y= "Percentile Rank")
+  labs(title="Cole's Values", fill= "Album", x= "Values", y= "Percentile Rank")+
+  ylim(0,1.0)
 ```
 
 
