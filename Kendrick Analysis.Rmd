@@ -1,0 +1,587 @@
+---
+title: "Kendrick Lamar Personality Analysis"
+author: "Selwyn Davis"
+date: "January 30, 2018"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, echo= FALSE}
+library("rjson")
+library(ggplot2)
+library(reshape2)
+
+Section80_json_data<- fromJSON(file= 'Section80.json')
+GoodKidMaadCity_json_data<- fromJSON(file= 'GoodKidMaadCity.json')
+ToPimpAButterfly_json_data<- fromJSON(file= 'ToPimpAButterfly.json')
+Damn_json_data<- fromJSON(file= 'Damn.json')
+
+
+
+Openness<- c(Section80_json_data$personality[[1]][4][[1]], GoodKidMaadCity_json_data$personality[[1]][4][[1]], 
+              ToPimpAButterfly_json_data$personality[[1]][4][[1]], Damn_json_data$personality[[1]][4][[1]])
+
+Conscientiousness<- c(Section80_json_data$personality[[2]][4][[1]], GoodKidMaadCity_json_data$personality[[2]][4][[1]], 
+                      ToPimpAButterfly_json_data$personality[[2]][4][[1]], Damn_json_data$personality[[2]][4][[1]])
+
+Extraversion<- c(Section80_json_data$personality[[3]][4][[1]], GoodKidMaadCity_json_data$personality[[3]][4][[1]], 
+              ToPimpAButterfly_json_data$personality[[3]][4][[1]], Damn_json_data$personality[[3]][4][[1]])
+
+Agreeableness<- c(Section80_json_data$personality[[4]][4][[1]], GoodKidMaadCity_json_data$personality[[4]][4][[1]], 
+                     ToPimpAButterfly_json_data$personality[[4]][4][[1]], Damn_json_data$personality[[4]][4][[1]])
+
+Emotional_range<- c(Section80_json_data$personality[[5]][4][[1]], GoodKidMaadCity_json_data$personality[[5]][4][[1]], 
+                  ToPimpAButterfly_json_data$personality[[5]][4][[1]], Damn_json_data$personality[[5]][4][[1]])
+
+Album_name= factor(c("Section 80", "Good Kid Maad City", "To Pimp A Butterfly", "Damn"))
+
+Album_name= factor(Album_name, levels(Album_name)[c(3,2,4,1)])
+
+Kendrick_Big5<- data.frame(Album_name, Openness, Conscientiousness, Extraversion, Agreeableness, Emotional_range)
+
+
+```
+
+## Kendrick Lamar Personality Analysis
+
+My name is Selwyn Davis and this is going to be a short analysis of Kendrick Lamar's personality as seen through his lyrics. I've always been interested in how an artist's persona influences their music and appeal. A large part of why artists gain popularity is due to their perceived character as well as their work. Rap is a lyrically dense genre that allows more of that character to shine through. 
+
+A little explanation as to where I'm getting this data. IBM Watson has a tool called [Personality Insights](https://personality-insights-demo.ng.bluemix.net) that uses unstructured text to gain insight into the writer's personality. This tool uses linguistic analytics and personality theory to create a personality profile. The profile will be created using the [Big 5 Personality Traits Model](https://en.wikipedia.org/wiki/Big_Five_personality_traits). Each Big 5 personality trait is measured as a percentile rank and further breaks down into 6 facets.
+
+
+Since a minimum amount of words is necessary for the tool to do it's job and using more words increases the strength of analysis I'll be analyzing Kendrick Lamar's personality from album to album. All the lyrics are provided by Genius.com and for the sake of ease I'll be including all guest verses and skits in this analysis. Though these are not necessarily written by the artist himself I'm going to assume that their inclusion in the album is significant in telling his tastes and sensibilities.
+
+Disclaimer: Keep in mind that this analysis is looking purely at word choice and doesn't take into account context or musical elements. Therefore this analysis won't tell you the complete story of an artists music or message. This analysis is for fun, one piece of an artist. 
+
+That should be enough of an intro so let's take a look!
+
+```{r Kendrick Big 5, echo= FALSE}
+
+Kendrick.long<- melt(Kendrick_Big5)
+
+ggplot(Kendrick.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge")+ 
+  labs(title="Kendrick's Big 5 Traits", fill= "Album", x= "Personality Traits", y= "Percentile Rank")
+
+```
+
+Nice! Here we can see that all of Kendrick's albums rank pretty highly when it comes to the Openness trait. Openness reflects the degree of intellectual curiosity, creativity and a preference for novelty and variety a person has. It is also described as the extent to which a person is imaginative or independent and depicts a personal preference for a variety of activities over a strict routine.
+
+***
+
+> See a lot of y'all don't understand Kendrick Lamar  
+Because you wonder how I could talk about money, hoes, clothes  
+God and history all in the same sentence.  
+You know what all the things have in common?  
+Only half of the truth, if you tell it.
+
+--- *Ab Soul's Outro, Section 80*
+
+***
+
+Let's look deeper into what makes Kendrick Lamar rank so highly in the Openness trait
+
+
+```{r pressure, echo=FALSE}
+
+Adventurousness<- c(Section80_json_data$personality[[1]][5][[1]][[1]][[4]], 
+                      GoodKidMaadCity_json_data$personality[[1]][5][[1]][[1]][[4]], 
+                      ToPimpAButterfly_json_data$personality[[1]][5][[1]][[1]][[4]], 
+                      Damn_json_data$personality[[1]][5][[1]][[1]][[4]])
+
+Artistic_Interest<- c(Section80_json_data$personality[[1]][5][[1]][[2]][[4]], 
+                      GoodKidMaadCity_json_data$personality[[1]][5][[1]][[2]][[4]], 
+                      ToPimpAButterfly_json_data$personality[[1]][5][[1]][[2]][[4]], 
+                      Damn_json_data$personality[[1]][5][[1]][[2]][[4]])
+
+Emotionality<- c(Section80_json_data$personality[[1]][5][[1]][[3]][[4]], 
+                 GoodKidMaadCity_json_data$personality[[1]][5][[1]][[3]][[4]], 
+                 ToPimpAButterfly_json_data$personality[[1]][5][[1]][[3]][[4]], 
+                 Damn_json_data$personality[[1]][5][[1]][[3]][[4]])
+
+Imagination<- c(Section80_json_data$personality[[1]][5][[1]][[4]][[4]], 
+                GoodKidMaadCity_json_data$personality[[1]][5][[1]][[4]][[4]], 
+                ToPimpAButterfly_json_data$personality[[1]][5][[1]][[4]][[4]], 
+                Damn_json_data$personality[[1]][5][[1]][[4]][[4]])
+
+
+Intellect<- c(Section80_json_data$personality[[1]][5][[1]][[5]][[4]], 
+              GoodKidMaadCity_json_data$personality[[1]][5][[1]][[5]][[4]], 
+              ToPimpAButterfly_json_data$personality[[1]][5][[1]][[5]][[4]], 
+              Damn_json_data$personality[[1]][5][[1]][[5]][[4]])
+
+Authority_Challenging<- c(Section80_json_data$personality[[1]][5][[1]][[6]][[4]], 
+                          GoodKidMaadCity_json_data$personality[[1]][5][[1]][[6]][[4]], 
+                          ToPimpAButterfly_json_data$personality[[1]][5][[1]][[6]][[4]], 
+                          Damn_json_data$personality[[1]][5][[1]][[6]][[4]])
+
+Kendrick_Openness<- data.frame(Album_name, Adventurousness, Artistic_Interest, Emotionality, Imagination, Intellect, 
+                               Authority_Challenging)
+
+Kendrick_Openness.long<- melt(Kendrick_Openness)
+
+ggplot(Kendrick_Openness.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge")+ 
+  labs(title="Kendrick's Openness", fill= "Album", x= "Openness Facets", y= "Percentile Rank")
+
+```
+
+Here we can see Kendrick ranks pretty consistently acorss four of the 6 Openness facets. We find the lowest ranks and least consistency in the Emotionality and Authority Chaellenging facets. Emotionality is a measure of emotional availibility or awareness of one's emotions. Authority Challenging can refer to one's openness to re-examine one's own values and traditions or their readiness to challenge external authority.
+
+***
+
+> I understand I ain't perfect, I probably won't come around  
+This time I might put you down  
+Last time I ain't give a fuck, I still feel the same now  
+My feelings might go numb, you're dealing with cold thumb  
+
+--- *Pride, Damn*
+
+***
+
+
+
+Let's go back to our orignal Big 5 bar graph from earlier.
+```{r Kendrick Big 5 Recap, echo= FALSE}
+ggplot(Kendrick.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge")+ 
+  labs(title="Kendrick's Big 5 Traits", fill= "Album", x= "Personality Traits", y= "Percentile Rank")
+
+```
+
+There's a lot of consistency acorss albums for Openness and Extraversion, but notice the clear split in the other categories. There's a striking similarity between Kendrick's first album, Section 80, and his latest album, Damn. Let's look at a breakdown of those traits and see if we can find anything interesting there.
+
+Here we have Conscientiousness.
+
+```{r Conscientiousness, echo= FALSE}
+Achievement_Striving<- c(Section80_json_data$personality[[2]][5][[1]][[1]][[4]], 
+                    GoodKidMaadCity_json_data$personality[[2]][5][[1]][[1]][[4]], 
+                    ToPimpAButterfly_json_data$personality[[2]][5][[1]][[1]][[4]], 
+                    Damn_json_data$personality[[2]][5][[1]][[1]][[4]])
+
+Cautiousness<- c(Section80_json_data$personality[[2]][5][[1]][[2]][[4]], 
+                      GoodKidMaadCity_json_data$personality[[2]][5][[1]][[2]][[4]], 
+                      ToPimpAButterfly_json_data$personality[[2]][5][[1]][[2]][[4]], 
+                      Damn_json_data$personality[[2]][5][[1]][[2]][[4]])
+
+Dutifulness<- c(Section80_json_data$personality[[2]][5][[1]][[3]][[4]], 
+                 GoodKidMaadCity_json_data$personality[[2]][5][[1]][[3]][[4]], 
+                 ToPimpAButterfly_json_data$personality[[2]][5][[1]][[3]][[4]], 
+                 Damn_json_data$personality[[2]][5][[1]][[3]][[4]])
+
+Orderliness<- c(Section80_json_data$personality[[2]][5][[1]][[4]][[4]], 
+                GoodKidMaadCity_json_data$personality[[2]][5][[1]][[4]][[4]], 
+                ToPimpAButterfly_json_data$personality[[2]][5][[1]][[4]][[4]], 
+                Damn_json_data$personality[[2]][5][[1]][[4]][[4]])
+
+
+Self_Discipline<- c(Section80_json_data$personality[[2]][5][[1]][[5]][[4]], 
+              GoodKidMaadCity_json_data$personality[[2]][5][[1]][[5]][[4]], 
+              ToPimpAButterfly_json_data$personality[[2]][5][[1]][[5]][[4]], 
+              Damn_json_data$personality[[2]][5][[1]][[5]][[4]])
+
+Self_Efficacy<- c(Section80_json_data$personality[[2]][5][[1]][[6]][[4]], 
+                          GoodKidMaadCity_json_data$personality[[2]][5][[1]][[6]][[4]], 
+                          ToPimpAButterfly_json_data$personality[[2]][5][[1]][[6]][[4]], 
+                          Damn_json_data$personality[[2]][5][[1]][[6]][[4]])
+
+Kendrick_Conscientiousness<- data.frame(Album_name, Achievement_Striving, Cautiousness, Dutifulness, Orderliness,
+                                        Self_Discipline, Self_Efficacy)
+
+Kendrick_Conscientiousness.long<- melt(Kendrick_Conscientiousness)
+
+ggplot(Kendrick_Conscientiousness.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge")+ 
+  labs(title="Kendrick's Conscientiousness", fill= "Album", x= "Conscientiousness Facets", y= "Percentile Rank")
+
+```
+
+
+In terms of Conscientiousness what sets the personality of Section 80 and Damn apart from his other albums is Achievement Striving, the need for personal achievemnt or sense of direction, and Self-Discipline, a measure of will power or the capacity to begin tasks and see them through to completiion despite distractions or boredom.
+
+
+
+Now let's take a look at Agreeableness. Personalities that rank higher in this category tend to value getting along with others as opposed to self interest and have a more optimistic view of human nature. 
+
+```{r Agreeableness, echo=FALSE}
+Altruism<- c(Section80_json_data$personality[[4]][5][[1]][[1]][[4]], 
+                         GoodKidMaadCity_json_data$personality[[4]][5][[1]][[1]][[4]], 
+                         ToPimpAButterfly_json_data$personality[[4]][5][[1]][[1]][[4]], 
+                         Damn_json_data$personality[[4]][5][[1]][[1]][[4]])
+
+Cooperation<- c(Section80_json_data$personality[[4]][5][[1]][[2]][[4]], 
+                 GoodKidMaadCity_json_data$personality[[4]][5][[1]][[2]][[4]], 
+                 ToPimpAButterfly_json_data$personality[[4]][5][[1]][[2]][[4]], 
+                 Damn_json_data$personality[[4]][5][[1]][[2]][[4]])
+
+Modesty<- c(Section80_json_data$personality[[4]][5][[1]][[3]][[4]], 
+                GoodKidMaadCity_json_data$personality[[4]][5][[1]][[3]][[4]], 
+                ToPimpAButterfly_json_data$personality[[4]][5][[1]][[3]][[4]], 
+                Damn_json_data$personality[[4]][5][[1]][[3]][[4]])
+
+Uncomprimising<- c(Section80_json_data$personality[[4]][5][[1]][[4]][[4]], 
+                GoodKidMaadCity_json_data$personality[[4]][5][[1]][[4]][[4]], 
+                ToPimpAButterfly_json_data$personality[[4]][5][[1]][[4]][[4]], 
+                Damn_json_data$personality[[4]][5][[1]][[4]][[4]])
+
+
+Sympathy<- c(Section80_json_data$personality[[4]][5][[1]][[5]][[4]], 
+                    GoodKidMaadCity_json_data$personality[[4]][5][[1]][[5]][[4]], 
+                    ToPimpAButterfly_json_data$personality[[4]][5][[1]][[5]][[4]], 
+                    Damn_json_data$personality[[4]][5][[1]][[5]][[4]])
+
+Trust<- c(Section80_json_data$personality[[4]][5][[1]][[6]][[4]], 
+                  GoodKidMaadCity_json_data$personality[[4]][5][[1]][[6]][[4]], 
+                  ToPimpAButterfly_json_data$personality[[4]][5][[1]][[6]][[4]], 
+                  Damn_json_data$personality[[4]][5][[1]][[6]][[4]])
+
+Kendrick_Agreeableness<- data.frame(Album_name, Altruism, Cooperation, Modesty, 
+                                    Uncomprimising, Sympathy, Trust)
+
+Kendrick_Agreeableness.long<- melt(Kendrick_Agreeableness)
+
+ggplot(Kendrick_Agreeableness.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge")+ 
+  labs(title="Kendrick's Agreeableness", fill= "Album", x= "Agreeableness Facets", y= "Percentile Rank")
+
+```
+
+Agreeableness is where Kendrick Lamar's albums rank lowest and we can see that Section 80 and Damn rank lower in every facet of Agreeableness than his other two albums.  
+
+***
+
+> Aw man, goddamn, all hell broke loose  
+You killed my cousin back in '94, fuck yo' truce!  
+Now crawl your head in that noose  
+You wind up dead on the news  
+Ain't no peace treaty, just pieces BG's up to pre-approve  
+
+--- *m.A.A.D. city, good kid, m.A.A.d city*
+
+***
+
+It's worth noting that of all the facets of Agreeableness his albums do rank higher in Sympathy.
+
+***
+
+> And you're right, your brother was a brother to me  
+And your sister's situation was the one that pulled me  
+In a direction to speak on somethin'  
+That's realer than the TV screen  
+
+--- *Sing About Me, good kid, m.A.A.d city*
+
+***
+
+
+With such a low Modesty rank it's safe to say that humility has never been his strong suit.
+
+***
+
+> A.M. to the P.M., P.M. to the A.M., funk  
+Piss out your per diem, you just gotta hate 'em, funk  
+If I quit your BM, I still ride Mercedes, funk  
+If I quit this season, I still be the greatest, funk  
+
+--- *HUMBLE, DAMN*
+
+***
+
+Now for Emotional Range also known as Nueroticism. Personalities that rank higher in this measure tend to experience and express more emotions such as anger, anxiety or depresssion. 
+
+```{r Neuroticism, echo=FALSE}
+
+Fiery<- c(Section80_json_data$personality[[5]][5][[1]][[1]][[4]], 
+             GoodKidMaadCity_json_data$personality[[5]][5][[1]][[1]][[4]], 
+             ToPimpAButterfly_json_data$personality[[5]][5][[1]][[1]][[4]], 
+             Damn_json_data$personality[[5]][5][[1]][[1]][[4]])
+
+Worry_Prone<- c(Section80_json_data$personality[[5]][5][[1]][[2]][[4]], 
+                GoodKidMaadCity_json_data$personality[[5]][5][[1]][[2]][[4]], 
+                ToPimpAButterfly_json_data$personality[[5]][5][[1]][[2]][[4]], 
+                Damn_json_data$personality[[5]][5][[1]][[2]][[4]])
+
+Melancholy<- c(Section80_json_data$personality[[5]][5][[1]][[3]][[4]], 
+            GoodKidMaadCity_json_data$personality[[5]][5][[1]][[3]][[4]], 
+            ToPimpAButterfly_json_data$personality[[5]][5][[1]][[3]][[4]], 
+            Damn_json_data$personality[[5]][5][[1]][[3]][[4]])
+
+Immoderation<- c(Section80_json_data$personality[[5]][5][[1]][[4]][[4]], 
+                   GoodKidMaadCity_json_data$personality[[5]][5][[1]][[4]][[4]], 
+                   ToPimpAButterfly_json_data$personality[[5]][5][[1]][[4]][[4]], 
+                   Damn_json_data$personality[[5]][5][[1]][[4]][[4]])
+
+
+Self_Conscious<- c(Section80_json_data$personality[[5]][5][[1]][[5]][[4]], 
+             GoodKidMaadCity_json_data$personality[[5]][5][[1]][[5]][[4]], 
+             ToPimpAButterfly_json_data$personality[[5]][5][[1]][[5]][[4]], 
+             Damn_json_data$personality[[5]][5][[1]][[5]][[4]])
+
+Stress<- c(Section80_json_data$personality[[5]][5][[1]][[6]][[4]], 
+          GoodKidMaadCity_json_data$personality[[5]][5][[1]][[6]][[4]], 
+          ToPimpAButterfly_json_data$personality[[5]][5][[1]][[6]][[4]], 
+          Damn_json_data$personality[[5]][5][[1]][[6]][[4]])
+
+Kendrick_Neuroticism<- data.frame(Album_name, Fiery, Worry_Prone, Melancholy,
+                                  Immoderation, Self_Conscious, Stress)
+
+Kendrick_Neuroticism.long<- melt(Kendrick_Neuroticism)
+
+ggplot(Kendrick_Neuroticism.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge") + 
+  labs(title="Kendrick's Emotional Range", fill= "Album", x= "Emotional Range Facets", y= "Percentile Rank")
+```
+
+
+In every facet of Emotional Range Section 80 and DAMN rank higher than Kendrick's albums. To Pimp a Butterfly does match that expressivness when it comes to Melancholy and Stress.
+
+***
+
+> I fuckin' tell you, you fuckin' failure-you ain't no leader!  
+I never liked you, forever despise you-I don't need you!  
+The world don't need you, don't let them deceive you   
+
+--- *u, To Pimp A Butterfly*
+
+***
+
+***
+
+> Guilt trippin' and feelin' resentment  
+I never met a transient that demanded attention  
+They got me frustrated, indecisive and power trippin'  
+Sour emotions got me lookin' at the universe different  
+I should distance myself, I should keep it relentless  
+My selfishness is what got me here, who the fuck I'm kiddin'?  
+
+--- *How Much A Dollar Cost, To Pimp A Butterfly*
+
+***
+
+It's interesting to see that the personality of his latest and most successful album are closer to each other than his works in between. The main cause for this being that they are both more emotionally expressive than his other albums.
+
+As Kendrick Lamar's career continues it'll be interesting how the personality of his albums will progress. We could be in store for a fiery, emotional work or something more calm and disciplined.
+
+There's a lot more data provided by the personality insights than what I've presented here so I've put all the JSON files with the data on my [Github](https://github.com/Selwyn-Davis/Lyrics-and-Personality). 
+
+In case anyone was interested I'll leave the facet breakdown for Extraversion at the bottom as well. Thanks for sticknig around until the end!
+
+```{r Extraversion, echo=FALSE}
+Activity<- c(Section80_json_data$personality[[3]][5][[1]][[1]][[4]], 
+          GoodKidMaadCity_json_data$personality[[3]][5][[1]][[1]][[4]], 
+          ToPimpAButterfly_json_data$personality[[3]][5][[1]][[1]][[4]], 
+          Damn_json_data$personality[[3]][5][[1]][[1]][[4]])
+
+Assertive<- c(Section80_json_data$personality[[3]][5][[1]][[2]][[4]], 
+                   GoodKidMaadCity_json_data$personality[[3]][5][[1]][[2]][[4]], 
+                   ToPimpAButterfly_json_data$personality[[3]][5][[1]][[2]][[4]], 
+                   Damn_json_data$personality[[3]][5][[1]][[2]][[4]])
+
+Cheerful<- c(Section80_json_data$personality[[3]][5][[1]][[3]][[4]], 
+               GoodKidMaadCity_json_data$personality[[3]][5][[1]][[3]][[4]], 
+               ToPimpAButterfly_json_data$personality[[3]][5][[1]][[3]][[4]], 
+               Damn_json_data$personality[[3]][5][[1]][[3]][[4]])
+
+Thrill_Seeking<- c(Section80_json_data$personality[[3]][5][[1]][[4]][[4]], 
+                 GoodKidMaadCity_json_data$personality[[3]][5][[1]][[4]][[4]], 
+                 ToPimpAButterfly_json_data$personality[[3]][5][[1]][[4]][[4]], 
+                 Damn_json_data$personality[[3]][5][[1]][[4]][[4]])
+
+
+Outgoing<- c(Section80_json_data$personality[[3]][5][[1]][[5]][[4]], 
+                       GoodKidMaadCity_json_data$personality[[3]][5][[1]][[5]][[4]], 
+                       ToPimpAButterfly_json_data$personality[[3]][5][[1]][[5]][[4]], 
+                       Damn_json_data$personality[[3]][5][[1]][[5]][[4]])
+
+Gregariousness<- c(Section80_json_data$personality[[3]][5][[1]][[6]][[4]], 
+                       GoodKidMaadCity_json_data$personality[[3]][5][[1]][[6]][[4]], 
+                       ToPimpAButterfly_json_data$personality[[3]][5][[1]][[6]][[4]], 
+                       Damn_json_data$personality[[3]][5][[1]][[6]][[4]])
+
+
+Kendrick_Extraversion<- data.frame(Album_name, Activity, Assertive, Cheerful,
+                                  Thrill_Seeking, Outgoing, Gregariousness)
+
+Kendrick_Extraversion.long<- melt(Kendrick_Extraversion)
+
+ggplot(Kendrick_Extraversion.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge") + 
+  labs(title="Kendrick's Extraversion", fill= "Album", x= "Extraversion Facets", y= "Percentile Rank")
+
+```
+
+
+***
+
+###Bonus Stuff
+
+
+Now we'll be taking a look at Consumer Needs. Research literature suggests that several types of human needs are universal and directly influence consumer behavior. The twelve categories of needs that are reported by the service are described in marketing literature as desires that a person hopes to fulfill when considering a product or service.
+
+```{r Consumer Needs 1, echo=FALSE}
+
+Challenge<- c(Section80_json_data$needs[[1]][[4]], 
+              GoodKidMaadCity_json_data$needs[[1]][[4]], 
+              ToPimpAButterfly_json_data$needs[[1]][[4]], 
+              Damn_json_data$needs[[1]][[4]])
+
+Closeness<- c(Section80_json_data$needs[[2]][[4]], 
+              GoodKidMaadCity_json_data$needs[[2]][[4]], 
+              ToPimpAButterfly_json_data$needs[[2]][[4]], 
+              Damn_json_data$needs[[2]][[4]])
+
+Curiosity<- c(Section80_json_data$needs[[3]][[4]], 
+              GoodKidMaadCity_json_data$needs[[3]][[4]], 
+              ToPimpAButterfly_json_data$needs[[3]][[4]], 
+              Damn_json_data$needs[[3]][[4]])
+
+Excitement<- c(Section80_json_data$needs[[4]][[4]], 
+              GoodKidMaadCity_json_data$needs[[4]][[4]], 
+              ToPimpAButterfly_json_data$needs[[4]][[4]], 
+              Damn_json_data$needs[[4]][[4]])
+
+
+Harmony<- c(Section80_json_data$needs[[5]][[4]], 
+            GoodKidMaadCity_json_data$needs[[5]][[4]], 
+            ToPimpAButterfly_json_data$needs[[5]][[4]], 
+            Damn_json_data$needs[[5]][[4]])
+
+Ideal<- c(Section80_json_data$needs[[6]][[4]], 
+          GoodKidMaadCity_json_data$needs[[6]][[4]], 
+          ToPimpAButterfly_json_data$needs[[6]][[4]], 
+          Damn_json_data$needs[[6]][[4]])
+
+
+Liberty<- c(Section80_json_data$needs[[7]][[4]], 
+          GoodKidMaadCity_json_data$needs[[7]][[4]], 
+          ToPimpAButterfly_json_data$needs[[7]][[4]], 
+          Damn_json_data$needs[[7]][[4]])
+
+Love<- c(Section80_json_data$needs[[8]][[4]], 
+        GoodKidMaadCity_json_data$needs[[8]][[4]], 
+        ToPimpAButterfly_json_data$needs[[8]][[4]], 
+        Damn_json_data$needs[[8]][[4]])
+
+Practicality<- c(Section80_json_data$needs[[9]][[4]], 
+                GoodKidMaadCity_json_data$needs[[9]][[4]], 
+                ToPimpAButterfly_json_data$needs[[9]][[4]], 
+                Damn_json_data$needs[[9]][[4]])
+
+Self_Expression<- c(Section80_json_data$needs[[10]][[4]], 
+                    GoodKidMaadCity_json_data$needs[[10]][[4]], 
+                    ToPimpAButterfly_json_data$needs[[10]][[4]], 
+                    Damn_json_data$needs[[10]][[4]])
+
+Stability<- c(Section80_json_data$needs[[11]][[4]], 
+              GoodKidMaadCity_json_data$needs[[11]][[4]], 
+              ToPimpAButterfly_json_data$needs[[11]][[4]], 
+              Damn_json_data$needs[[11]][[4]])
+
+Structure<- c(Section80_json_data$needs[[12]][[4]], 
+          GoodKidMaadCity_json_data$needs[[12]][[4]], 
+          ToPimpAButterfly_json_data$needs[[12]][[4]], 
+          Damn_json_data$needs[[12]][[4]])
+
+
+Kendrick_Needs1<- data.frame(Album_name, Challenge, Closeness, Curiosity, Excitement, Harmony, Ideal)
+
+Kendrick_Needs1.long<- melt(Kendrick_Needs1)
+
+ggplot(Kendrick_Needs1.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge") + 
+  labs(title="Kendrick's Consumer Needs", fill= "Album", x= "Consumer Needs", y= "Percentile Rank")
+
+```
+
+**Challenge** - A desire to achieve, succeed, compete, or pursue experiences that test one's abilities.
+
+**Closeness** - A need to nurture or be nurtured; a feeling of belonging.
+
+**Curiosity** - A need to pursue experiences that foster learning, exploration, and growth. 
+
+**Excitement** -A need to pursue experiences or lead a lifestyle that arouses enthusiasm and eagerness.
+
+**Harmony** -  A need to appreciate or please other people, their viewpoints, and feelings.
+
+**Ideal** - A desire to satisfy one's idea of perfection in a lifestyle or experience, oftentimes seen as pursuing a sense of community.
+
+
+```{r Consumer Needs 2, echo=FALSE}
+Kendrick_Needs2<- data.frame(Album_name, Liberty, Love, Practicality, Self_Expression, Stability,
+                          Structure)
+
+Kendrick_Needs2.long<- melt(Kendrick_Needs2)
+
+ggplot(Kendrick_Needs2.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge") + 
+  labs(title="Kendrick's Consumer Needs", fill= "Album", x= "Consumer Needs", y= "Percentile Rank")
+```
+
+**Liberty** - A need to escape, a desire for new experiences, new things.
+
+**Love** - Social contact, whether one-to-one or one-to-many.
+
+**Practicality** - A desire for getting the job done, skill, and efficiency.
+
+**Self Expression** -A desire to discover and assert one's identity.
+
+**Stability** -  A need for the sensible, tried and tested, with a good track record and a known history.
+
+**Structure** - A need for organization, planning, and things that have a clear purpose.
+
+***
+
+Now we're going to take a look at Values. Values convey what is most important to an individual. They are "desirable, trans-situational goals, varying in importance, that serve as guiding principles in people's lives". Five features that are common to all values: (1) values are beliefs; (2) values are a motivational construct; (3) values transcend specific actions and situations; (4) values guide the selection or evaluation of actions, policies, people, and events; and (5) values vary by relative importance and can be ranked accordingly. The service computes the five basic human values proposed by Schwartz and validated in more than twenty countries (Schwartz, 1992).
+
+```{r Values, echo=FALSE}
+
+Tradition<- c(Section80_json_data$needs[[1]][[4]], 
+              GoodKidMaadCity_json_data$needs[[1]][[4]], 
+              ToPimpAButterfly_json_data$needs[[1]][[4]], 
+              Damn_json_data$needs[[1]][[4]])
+
+Stimulation<- c(Section80_json_data$needs[[2]][[4]], 
+              GoodKidMaadCity_json_data$needs[[2]][[4]], 
+              ToPimpAButterfly_json_data$needs[[2]][[4]], 
+              Damn_json_data$needs[[2]][[4]])
+
+Hedonism<- c(Section80_json_data$needs[[3]][[4]], 
+            GoodKidMaadCity_json_data$needs[[3]][[4]], 
+            ToPimpAButterfly_json_data$needs[[3]][[4]], 
+            Damn_json_data$needs[[3]][[4]])
+
+Achievement<- c(Section80_json_data$needs[[4]][[4]], 
+              GoodKidMaadCity_json_data$needs[[4]][[4]], 
+              ToPimpAButterfly_json_data$needs[[4]][[4]], 
+              Damn_json_data$needs[[4]][[4]])
+
+Transcendence<- c(Section80_json_data$needs[[5]][[4]], 
+                GoodKidMaadCity_json_data$needs[[5]][[4]], 
+                ToPimpAButterfly_json_data$needs[[5]][[4]], 
+                Damn_json_data$needs[[5]][[4]])
+
+
+
+Kendrick_Values<- data.frame(Album_name, Tradition, Stimulation, Hedonism, Achievement, Transcendence)
+
+Kendrick_Values.long<- melt(Kendrick_Values)
+
+ggplot(Kendrick_Values.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge") + 
+  labs(title="Kendrick's Values", fill= "Album", x= "Values", y= "Percentile Rank")
+
+```
+
+**Tradition/Conservation** - Respect, commitment, and acceptance of the customs and ideas that one's culture and/or religion provides.
+
+**Stimulation/ Openness to Change** - Excitement, novelty, and challenge in life.
+
+**Hedonism/Taking Pleasure in Life** - Pleasure or sensuous gratification for oneself.
+
+**Achievement/Self-Enhancement** - Personal success through demonstrating competence according to social standards.
+
+**Self-Transcendence/Helping Others** -  Preserving and enhancing the welfare of those with whom one is in frequent personal contact.
+
+
+***
