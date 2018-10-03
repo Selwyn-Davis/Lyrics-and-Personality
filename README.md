@@ -9,6 +9,6 @@ A Personality Analysis of Frank Ocean's Lyrics - https://cdn.rawgit.com/Selwyn-D
 
 A Personality Analysis of Taylor Swift's Lyrics - https://cdn.rawgit.com/Selwyn-Davis/Lyrics-and-Personality/9a1da092/Taylor_Analysis.html
 
-A Personality Analysis of Drake's Lyrics - https://cdn.rawgit.com/Selwyn-Davis/Lyrics-and-Personality/aa03589f/Drake_Analysis.html
+A Personality Analysis of Drake's Lyrics - https://cdn.rawgit.com/Selwyn-Davis/Lyrics-and-Personality/de46773b/Drake_Analysis.html
 
 A Personality Analysis of J Cole's Lyrics - https://cdn.rawgit.com/Selwyn-Davis/Lyrics-and-Personality/dc3de95b/Cole_Analysis.html
