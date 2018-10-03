@@ -1,0 +1,672 @@
+---
+title: "Drake Personality Analysis"
+author: "Selwyn Davis"
+date: "May 24, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library("rjson")
+library(ggplot2)
+library(reshape2)
+
+ThankMeLater_json_data<- fromJSON(file= 'ThankMeLater.json')
+TakeCare_json_data<- fromJSON(file= 'TakeCare.json')
+NothingWasTheSame_json_data<- fromJSON(file= 'NothingWasTheSame.json')
+IfYoureReadingThisItsTooLate_json_data<- fromJSON(file= 'IfYoureReadingThisItsTooLate.json')
+Views_json_data<- fromJSON(file= 'Views.json')
+MoreLife_json_data<- fromJSON(file= 'MoreLife.json')
+```
+
+## Drake Personality Analysis
+
+My name is Selwyn Davis and this is going to be a short analysis of Drake's personality as seen through his lyrics. I've always been interested in how an artist's persona influences their music and how that persona changes over time. A large part of why artists gain popularity is due to their perceived character.
+
+A little explanation as to where I'm getting this data. IBM Watson has a tool called [Personality Insights](https://personality-insights-demo.ng.bluemix.net) that uses unstructured text to gain insight into the writer's personality. This tool uses linguistic analytics and personality theory to create a personality profile. The profile will be created using the [Big 5 Personality Traits Model](https://en.wikipedia.org/wiki/Big_Five_personality_traits). Each Big 5 personality trait is measured as a percentile rank and further breaks down into 6 facets.
+
+
+Since a minimum amount of words is necessary for the tool to do it's job and using more words increases the strength of analysis I'll be analyzing Drake's personality from album to album. All the lyrics are provided by Genius.com and for the sake of ease I'll be including all guest verses and skits in this analysis. Though these are not necessarily written by the artist hisself I'm going to assume that their inclusion in the album is significant in telling his tastes and sensibilities.
+
+Disclaimer: Keep in mind that this analysis is looking purely at word choice and doesn't take into account context or musical elements. Therefore this analysis won't tell you the complete story of an artists music or message. This analysis is for fun, one piece of an artist. 
+
+That should be enough of an intro so let's take a look!
+
+```{r Big 5, echo= FALSE}
+Openness<- c(ThankMeLater_json_data$personality[[1]][4][[1]], TakeCare_json_data$personality[[1]][4][[1]], 
+             NothingWasTheSame_json_data$personality[[1]][4][[1]], 
+             IfYoureReadingThisItsTooLate_json_data$personality[[1]][4][[1]],
+             Views_json_data$personality[[1]][4][[1]],
+             MoreLife_json_data$personality[[1]][4][[1]])
+
+Conscientiousness<- c(ThankMeLater_json_data$personality[[2]][4][[1]], TakeCare_json_data$personality[[2]][4][[1]], 
+                      NothingWasTheSame_json_data$personality[[2]][4][[1]], 
+                      IfYoureReadingThisItsTooLate_json_data$personality[[2]][4][[1]],
+                      Views_json_data$personality[[2]][4][[1]],
+                      MoreLife_json_data$personality[[2]][4][[1]])
+
+Extraversion<- c(ThankMeLater_json_data$personality[[3]][4][[1]], TakeCare_json_data$personality[[3]][4][[1]], 
+                 NothingWasTheSame_json_data$personality[[3]][4][[1]], 
+                 IfYoureReadingThisItsTooLate_json_data$personality[[3]][4][[1]],
+                 Views_json_data$personality[[3]][4][[1]],
+                 MoreLife_json_data$personality[[3]][4][[1]])
+
+Agreeableness<- c(ThankMeLater_json_data$personality[[4]][4][[1]], TakeCare_json_data$personality[[4]][4][[1]], 
+                  NothingWasTheSame_json_data$personality[[4]][4][[1]], 
+                  IfYoureReadingThisItsTooLate_json_data$personality[[4]][4][[1]],
+                  Views_json_data$personality[[4]][4][[1]],
+                  MoreLife_json_data$personality[[4]][4][[1]])
+
+Emotional_range<- c(ThankMeLater_json_data$personality[[5]][4][[1]], TakeCare_json_data$personality[[5]][4][[1]], 
+                    NothingWasTheSame_json_data$personality[[5]][4][[1]], 
+                    IfYoureReadingThisItsTooLate_json_data$personality[[5]][4][[1]],
+                    Views_json_data$personality[[5]][4][[1]],
+                    MoreLife_json_data$personality[[5]][4][[1]])
+
+Album_name= factor(c("Thank Me Later", "Take Care", "Nothing Was The Same", 
+                     "If You're Reading This It's Too Late", "Views", "More Life"))
+
+Album_name= factor(Album_name, levels(Album_name)[c(5,4,3,1,6,2)])
+
+Drake_Big5<- data.frame(Album_name, Openness, Conscientiousness, Extraversion, Agreeableness, Emotional_range)
+
+
+Drake.long<- melt(Drake_Big5)
+
+ggplot(Drake.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge")+ 
+  labs(title="Drake's Big 5", fill= "Album", x= "Openness Facets", y= "Percentile Rank")
+```
+
+**Openess** - Openness to experience. Higher: Intellectually curious, emotionally-aware, sensitive to beauty and willing to try new things.
+Lower: Preferring the plain, straightforward, and obvious over the complex, ambiguous, and subtle.
+
+**Conscientiousness** - Higher: More self-disciplined, dutiful, or aiming for achievement against measures or outside expectations.
+Lower: More likely to prefer the spontaneous over the planned.
+
+**Extraversion** - Higher: More energetic and pronounced engagement with the external world. Likes high group visibility, talking, and asserting themselves.
+Lower: Needs less stimulation and are more independent of their social world. It does not mean they are shy, un-friendly, or antisocial.
+
+**Agreeableness** - Higher: Value getting along with others. They have a more optimistic view of human nature.
+Lower: Value self interests over others. They are more skeptical of others' motives.
+
+**Emotional Range** -  Higher: More likely to have negative emotions or get upset. It could mean they are going through a tough time.
+Lower: More calm and less likely to get upset. It does not mean they are positive, or happy people.
+
+
+```{r Openness, echo=FALSE}
+Adventurousness<- c(ThankMeLater_json_data$personality[[1]][5][[1]][[1]][[4]], 
+                    TakeCare_json_data$personality[[1]][5][[1]][[1]][[4]], 
+                    NothingWasTheSame_json_data$personality[[1]][5][[1]][[1]][[4]], 
+                    IfYoureReadingThisItsTooLate_json_data$personality[[1]][5][[1]][[1]][[4]],
+                    Views_json_data$personality[[1]][5][[1]][[1]][[4]],
+                    MoreLife_json_data$personality[[1]][5][[1]][[1]][[4]])
+
+Artistic_Interest<- c(ThankMeLater_json_data$personality[[1]][5][[1]][[2]][[4]], 
+                      TakeCare_json_data$personality[[1]][5][[1]][[2]][[4]], 
+                      NothingWasTheSame_json_data$personality[[1]][5][[1]][[2]][[4]], 
+                      IfYoureReadingThisItsTooLate_json_data$personality[[1]][5][[1]][[2]][[4]],
+                      Views_json_data$personality[[1]][5][[1]][[2]][[4]],
+                      MoreLife_json_data$personality[[1]][5][[1]][[2]][[4]])
+
+Emotionality<- c(ThankMeLater_json_data$personality[[1]][5][[1]][[3]][[4]], 
+                 TakeCare_json_data$personality[[1]][5][[1]][[3]][[4]], 
+                 NothingWasTheSame_json_data$personality[[1]][5][[1]][[3]][[4]], 
+                 IfYoureReadingThisItsTooLate_json_data$personality[[1]][5][[1]][[3]][[4]],
+                 Views_json_data$personality[[1]][5][[1]][[3]][[4]],
+                 MoreLife_json_data$personality[[1]][5][[1]][[3]][[4]])
+
+Imagination<- c(ThankMeLater_json_data$personality[[1]][5][[1]][[4]][[4]], 
+                TakeCare_json_data$personality[[1]][5][[1]][[4]][[4]], 
+                NothingWasTheSame_json_data$personality[[1]][5][[1]][[4]][[4]], 
+                IfYoureReadingThisItsTooLate_json_data$personality[[1]][5][[1]][[4]][[4]],
+                Views_json_data$personality[[1]][5][[1]][[4]][[4]],
+                MoreLife_json_data$personality[[1]][5][[1]][[4]][[4]])
+
+
+Intellect<- c(ThankMeLater_json_data$personality[[1]][5][[1]][[5]][[4]], 
+              TakeCare_json_data$personality[[1]][5][[1]][[5]][[4]], 
+              NothingWasTheSame_json_data$personality[[1]][5][[1]][[5]][[4]], 
+              IfYoureReadingThisItsTooLate_json_data$personality[[1]][5][[1]][[5]][[4]],
+              Views_json_data$personality[[1]][5][[1]][[5]][[4]],
+              MoreLife_json_data$personality[[1]][5][[1]][[5]][[4]])
+
+Authority_Challenging<- c(ThankMeLater_json_data$personality[[1]][5][[1]][[6]][[4]], 
+                          TakeCare_json_data$personality[[1]][5][[1]][[6]][[4]], 
+                          NothingWasTheSame_json_data$personality[[1]][5][[1]][[6]][[4]], 
+                          IfYoureReadingThisItsTooLate_json_data$personality[[1]][5][[1]][[6]][[4]],
+                          Views_json_data$personality[[1]][5][[1]][[6]][[4]],
+                          MoreLife_json_data$personality[[1]][5][[1]][[6]][[4]])
+
+Drake_Openness<- data.frame(Album_name, Adventurousness, Artistic_Interest, Emotionality)
+
+Drake_Openness.long<- melt(Drake_Openness)
+
+ggplot(Drake_Openness.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity", position="dodge") + 
+  labs(title="Drake's Openness", fill= "Album", x= "Openness Facets", y= "Percentile Rank")
+```
+
+**Adventurousness** -  Eagerness to trying new activities and experiencing new things
+
+**Artistic Interest** - Appreciation for art and beauty, both man made and in nature
+
+**Emotionality** - Emotional availability; awareness of own feelings.
+```{r Openness 2, echo=FALSE}
+
+Drake_Openness2<- data.frame(Album_name, Imagination, Intellect, Authority_Challenging)
+
+Drake_Openness2.long<- melt(Drake_Openness2)
+
+ggplot(Drake_Openness2.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge")+ 
+  labs(title="Drake's Openness", fill= "Album", x= "Openness Facets", y= "Percentile Rank")
+```
+
+**Imagination** - Openness to creating an inner world of fantasy
+
+**Intellect** - Intellectual curiosity;openness to new ideas
+
+**Authority Challenging** - Opennes to re-examine own values and traditions; readiness to challenge authority
+
+```{r Conscientiousness, echo=FALSE}
+Achievement_Striving<- c(ThankMeLater_json_data$personality[[2]][5][[1]][[1]][[4]], 
+                         TakeCare_json_data$personality[[2]][5][[1]][[1]][[4]], 
+                         NothingWasTheSame_json_data$personality[[2]][5][[1]][[1]][[4]], 
+                         IfYoureReadingThisItsTooLate_json_data$personality[[2]][5][[1]][[1]][[4]],
+                         Views_json_data$personality[[2]][5][[1]][[1]][[4]],
+                         MoreLife_json_data$personality[[2]][5][[1]][[1]][[4]])
+
+Cautiousness<- c(ThankMeLater_json_data$personality[[2]][5][[1]][[2]][[4]], 
+                 TakeCare_json_data$personality[[2]][5][[1]][[2]][[4]], 
+                 NothingWasTheSame_json_data$personality[[2]][5][[1]][[2]][[4]], 
+                 IfYoureReadingThisItsTooLate_json_data$personality[[2]][5][[1]][[2]][[4]],
+                 Views_json_data$personality[[2]][5][[1]][[2]][[4]],
+                 MoreLife_json_data$personality[[2]][5][[1]][[2]][[4]])
+
+Dutifulness<- c(ThankMeLater_json_data$personality[[2]][5][[1]][[3]][[4]], 
+                TakeCare_json_data$personality[[2]][5][[1]][[3]][[4]], 
+                NothingWasTheSame_json_data$personality[[2]][5][[1]][[3]][[4]], 
+                IfYoureReadingThisItsTooLate_json_data$personality[[2]][5][[1]][[3]][[4]],
+                Views_json_data$personality[[2]][5][[1]][[3]][[4]],
+                MoreLife_json_data$personality[[2]][5][[1]][[3]][[4]])
+
+Orderliness<- c(ThankMeLater_json_data$personality[[2]][5][[1]][[4]][[4]], 
+                TakeCare_json_data$personality[[2]][5][[1]][[4]][[4]], 
+                NothingWasTheSame_json_data$personality[[2]][5][[1]][[4]][[4]], 
+                IfYoureReadingThisItsTooLate_json_data$personality[[2]][5][[1]][[4]][[4]],
+                Views_json_data$personality[[2]][5][[1]][[4]][[4]],
+                MoreLife_json_data$personality[[2]][5][[1]][[4]][[4]])
+
+
+Self_Discipline<- c(ThankMeLater_json_data$personality[[2]][5][[1]][[5]][[4]], 
+                    TakeCare_json_data$personality[[2]][5][[1]][[5]][[4]], 
+                    NothingWasTheSame_json_data$personality[[2]][5][[1]][[5]][[4]], 
+                    IfYoureReadingThisItsTooLate_json_data$personality[[2]][5][[1]][[5]][[4]],
+                    Views_json_data$personality[[2]][5][[1]][[5]][[4]],
+                    MoreLife_json_data$personality[[2]][5][[1]][[5]][[4]])
+
+Self_Efficacy<- c(ThankMeLater_json_data$personality[[2]][5][[1]][[6]][[4]], 
+                  TakeCare_json_data$personality[[2]][5][[1]][[6]][[4]], 
+                  NothingWasTheSame_json_data$personality[[2]][5][[1]][[6]][[4]], 
+                  IfYoureReadingThisItsTooLate_json_data$personality[[2]][5][[1]][[6]][[4]],
+                  Views_json_data$personality[[2]][5][[1]][[6]][[4]],
+                  MoreLife_json_data$personality[[2]][5][[1]][[6]][[4]])
+
+Drake_Conscientiousness<- data.frame(Album_name, Achievement_Striving, Cautiousness, Dutifulness)
+
+Drake_Conscientiousness.long<- melt(Drake_Conscientiousness)
+
+ggplot(Drake_Conscientiousness.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge")+ 
+  labs(title="Drake's Conscientiousness", fill= "Album", x= "Conscientiousness Facets", y= "Percentile Rank") 
+```
+
+**Achievement Striving** - The need for personal achievement and sense of direction. 
+
+**Cautiousness** - Tendency to think things through before acting or speaking.
+
+**Dutifulness** - Sense of duty; amount of emphasis placed on fulfilling obligations.
+```{r Conscientiousness 2, echo=FALSE}
+
+Drake_Conscientiousness2<- data.frame(Album_name, Orderliness, Self_Discipline, Self_Efficacy)
+
+Drake_Conscientiousness2.long<- melt(Drake_Conscientiousness2)
+
+ggplot(Drake_Conscientiousness2.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge")+ 
+  labs(title="Drake's Conscientiousness", fill= "Album", x= "Conscientiousness Facets", y= "Percentile Rank") 
+```
+
+**Orderliness** - Personal organization, tidiness, neatness.
+
+**Self Discipline** - Will-power; the capacity to begin tasks and follow through to completion in spite of boredom or distractions.
+
+**Self Efficacy** - Belief in one's own competence
+
+```{r Extraversion, echo=FALSE}
+Activity<- c(ThankMeLater_json_data$personality[[3]][5][[1]][[1]][[4]], 
+             TakeCare_json_data$personality[[3]][5][[1]][[1]][[4]], 
+             NothingWasTheSame_json_data$personality[[3]][5][[1]][[1]][[4]], 
+             IfYoureReadingThisItsTooLate_json_data$personality[[3]][5][[1]][[1]][[4]],
+             Views_json_data$personality[[3]][5][[1]][[1]][[4]],
+             MoreLife_json_data$personality[[3]][5][[1]][[1]][[4]])
+
+Assertive<- c(ThankMeLater_json_data$personality[[3]][5][[1]][[2]][[4]], 
+              TakeCare_json_data$personality[[3]][5][[1]][[2]][[4]], 
+              NothingWasTheSame_json_data$personality[[3]][5][[1]][[2]][[4]], 
+              IfYoureReadingThisItsTooLate_json_data$personality[[3]][5][[1]][[2]][[4]],
+              Views_json_data$personality[[3]][5][[1]][[2]][[4]],
+              MoreLife_json_data$personality[[3]][5][[1]][[2]][[4]])
+
+Cheerful<- c(ThankMeLater_json_data$personality[[3]][5][[1]][[3]][[4]], 
+             TakeCare_json_data$personality[[3]][5][[1]][[3]][[4]], 
+             NothingWasTheSame_json_data$personality[[3]][5][[1]][[3]][[4]], 
+             IfYoureReadingThisItsTooLate_json_data$personality[[3]][5][[1]][[3]][[4]],
+             Views_json_data$personality[[3]][5][[1]][[3]][[4]],
+             MoreLife_json_data$personality[[3]][5][[1]][[3]][[4]])
+
+Thrill_Seeking<- c(ThankMeLater_json_data$personality[[3]][5][[1]][[4]][[4]], 
+                   TakeCare_json_data$personality[[3]][5][[1]][[4]][[4]], 
+                   NothingWasTheSame_json_data$personality[[3]][5][[1]][[4]][[4]], 
+                   IfYoureReadingThisItsTooLate_json_data$personality[[3]][5][[1]][[4]][[4]],
+                   Views_json_data$personality[[3]][5][[1]][[4]][[4]],
+                   MoreLife_json_data$personality[[3]][5][[1]][[4]][[4]])
+
+
+Warmth<- c(ThankMeLater_json_data$personality[[3]][5][[1]][[5]][[4]], 
+             TakeCare_json_data$personality[[3]][5][[1]][[5]][[4]], 
+             NothingWasTheSame_json_data$personality[[3]][5][[1]][[5]][[4]], 
+             IfYoureReadingThisItsTooLate_json_data$personality[[3]][5][[1]][[5]][[4]],
+             Views_json_data$personality[[3]][5][[1]][[5]][[4]],
+             MoreLife_json_data$personality[[3]][5][[1]][[5]][[4]])
+
+Gregariousness<- c(ThankMeLater_json_data$personality[[3]][5][[1]][[6]][[4]], 
+                   TakeCare_json_data$personality[[3]][5][[1]][[6]][[4]], 
+                   NothingWasTheSame_json_data$personality[[3]][5][[1]][[6]][[4]], 
+                   IfYoureReadingThisItsTooLate_json_data$personality[[3]][5][[1]][[6]][[4]],
+                   Views_json_data$personality[[3]][5][[1]][[6]][[4]],
+                   MoreLife_json_data$personality[[3]][5][[1]][[6]][[4]])
+
+
+Drake_Extraversion<- data.frame(Album_name, Activity, Assertive, Cheerful)
+
+Drake_Extraversion.long<- melt(Drake_Extraversion)
+
+ggplot(Drake_Extraversion.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge")+ 
+  labs(title="Drake's Extraversion", fill= "Album", x= "Extraversion Facets", y= "Percentile Rank")
+```
+
+**Activity** - Pace of living; level of busyness
+
+**Assertive** - Forcefulness of expression; pursuit of leadership and social ascendancy; desire to direct the activities of others.
+
+**Cheerful** - Tendency to express or experience positive emotions.
+
+```{r Extraversion 2, echo=FALSE}
+Drake_Extraversion2<- data.frame(Album_name, Thrill_Seeking, Warmth, Gregariousness)
+
+Drake_Extraversion2.long<- melt(Drake_Extraversion2)
+
+ggplot(Drake_Extraversion2.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge") + 
+  labs(title="Drake's Extraversion", fill= "Album", x= "Extraversion Facets", y= "Percentile Rank")
+```
+
+**Thrill Seeking** -  A need for environmental stimulation.
+
+**Warmth** - Interest in and friendliness towards others; socially confident.
+
+**Gregariousness** - Fondness for the company of others; sociability.
+
+```{r Agreeableness, echo=FALSE}
+Altruism<- c(ThankMeLater_json_data$personality[[4]][5][[1]][[1]][[4]], 
+             TakeCare_json_data$personality[[4]][5][[1]][[1]][[4]], 
+             NothingWasTheSame_json_data$personality[[4]][5][[1]][[1]][[4]], 
+             IfYoureReadingThisItsTooLate_json_data$personality[[4]][5][[1]][[1]][[4]],
+             Views_json_data$personality[[4]][5][[1]][[1]][[4]],
+             MoreLife_json_data$personality[[4]][5][[1]][[1]][[4]])
+
+Cooperation<- c(ThankMeLater_json_data$personality[[4]][5][[1]][[2]][[4]], 
+                TakeCare_json_data$personality[[4]][5][[1]][[2]][[4]], 
+                NothingWasTheSame_json_data$personality[[4]][5][[1]][[2]][[4]], 
+                IfYoureReadingThisItsTooLate_json_data$personality[[4]][5][[1]][[2]][[4]],
+                Views_json_data$personality[[4]][5][[1]][[2]][[4]],
+                MoreLife_json_data$personality[[4]][5][[1]][[2]][[4]])
+
+Modesty<- c(ThankMeLater_json_data$personality[[4]][5][[1]][[3]][[4]], 
+            TakeCare_json_data$personality[[4]][5][[1]][[3]][[4]], 
+            NothingWasTheSame_json_data$personality[[4]][5][[1]][[3]][[4]], 
+            IfYoureReadingThisItsTooLate_json_data$personality[[4]][5][[1]][[3]][[4]],
+            Views_json_data$personality[[4]][5][[1]][[3]][[4]],
+            MoreLife_json_data$personality[[4]][5][[1]][[3]][[4]])
+
+Uncomprimising<- c(ThankMeLater_json_data$personality[[4]][5][[1]][[4]][[4]], 
+                   TakeCare_json_data$personality[[4]][5][[1]][[4]][[4]], 
+                   NothingWasTheSame_json_data$personality[[4]][5][[1]][[4]][[4]], 
+                   IfYoureReadingThisItsTooLate_json_data$personality[[4]][5][[1]][[4]][[4]],
+                   Views_json_data$personality[[4]][5][[1]][[4]][[4]],
+                   MoreLife_json_data$personality[[4]][5][[1]][[4]][[4]])
+
+
+Sympathy<- c(ThankMeLater_json_data$personality[[4]][5][[1]][[5]][[4]], 
+             TakeCare_json_data$personality[[4]][5][[1]][[5]][[4]], 
+             NothingWasTheSame_json_data$personality[[4]][5][[1]][[5]][[4]], 
+             IfYoureReadingThisItsTooLate_json_data$personality[[4]][5][[1]][[5]][[4]],
+             Views_json_data$personality[[4]][5][[1]][[5]][[4]],
+             MoreLife_json_data$personality[[4]][5][[1]][[5]][[4]])
+
+Trust<- c(ThankMeLater_json_data$personality[[4]][5][[1]][[6]][[4]], 
+          TakeCare_json_data$personality[[4]][5][[1]][[6]][[4]], 
+          NothingWasTheSame_json_data$personality[[4]][5][[1]][[6]][[4]], 
+          IfYoureReadingThisItsTooLate_json_data$personality[[4]][5][[1]][[6]][[4]],
+          Views_json_data$personality[[4]][5][[1]][[6]][[4]],
+          MoreLife_json_data$personality[[4]][5][[1]][[6]][[4]])
+
+Drake_Agreeableness<- data.frame(Album_name, Altruism, Cooperation, Modesty)
+
+Drake_Agreeableness.long<- melt(Drake_Agreeableness)
+
+ggplot(Drake_Agreeableness.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge")+ 
+  labs(title="Drake's Agreeableness", fill= "Album", x= "Agreeableness Facets", y= "Percentile Rank")
+```
+
+**Altruism** - Active and genuine concern for the welfare of others.
+
+**Cooperation** - Dislike of confrontations. Responding to interpersonal conflict with a willingness to compromise.
+
+**Modesty** -  Tendency to be unassuming and play down own achievements; humility.
+
+```{r Agreeableness 2, echo=FALSE}
+
+Drake_Agreeableness2<- data.frame(Album_name, Uncomprimising, Sympathy, Trust)
+
+Drake_Agreeableness2.long<- melt(Drake_Agreeableness2)
+
+ggplot(Drake_Agreeableness2.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge")+ 
+  labs(title="Drake's Agreeableness", fill= "Album", x= "Agreeableness Facets", y= "Percentile Rank")
+```
+
+**Uncomprimising** - Frank and genuine in expression; candid, blunt.
+
+**Sympathy** - Attitude of compassion for others; kindness.
+
+**Trust** - Level of belief in the sincerity and good intentions of others.
+
+```{r Emotional Range, echo=FALSE}
+Fiery<- c(ThankMeLater_json_data$personality[[5]][5][[1]][[1]][[4]], 
+          TakeCare_json_data$personality[[5]][5][[1]][[1]][[4]], 
+          NothingWasTheSame_json_data$personality[[5]][5][[1]][[1]][[4]], 
+          IfYoureReadingThisItsTooLate_json_data$personality[[5]][5][[1]][[1]][[4]],
+          Views_json_data$personality[[5]][5][[1]][[1]][[4]],
+          MoreLife_json_data$personality[[5]][5][[1]][[1]][[4]])
+
+Prone_to_Worry<- c(ThankMeLater_json_data$personality[[5]][5][[1]][[2]][[4]], 
+                   TakeCare_json_data$personality[[5]][5][[1]][[2]][[4]], 
+                   NothingWasTheSame_json_data$personality[[5]][5][[1]][[2]][[4]], 
+                   IfYoureReadingThisItsTooLate_json_data$personality[[5]][5][[1]][[2]][[4]],
+                   Views_json_data$personality[[5]][5][[1]][[2]][[4]],
+                   MoreLife_json_data$personality[[5]][5][[1]][[2]][[4]])
+
+Melancholy<- c(ThankMeLater_json_data$personality[[5]][5][[1]][[3]][[4]], 
+               TakeCare_json_data$personality[[5]][5][[1]][[3]][[4]], 
+               NothingWasTheSame_json_data$personality[[5]][5][[1]][[3]][[4]], 
+               IfYoureReadingThisItsTooLate_json_data$personality[[5]][5][[1]][[3]][[4]],
+               Views_json_data$personality[[5]][5][[1]][[3]][[4]],
+               MoreLife_json_data$personality[[5]][5][[1]][[3]][[4]])
+
+Immoderation<- c(ThankMeLater_json_data$personality[[5]][5][[1]][[4]][[4]], 
+                 TakeCare_json_data$personality[[5]][5][[1]][[4]][[4]], 
+                 NothingWasTheSame_json_data$personality[[5]][5][[1]][[4]][[4]], 
+                 IfYoureReadingThisItsTooLate_json_data$personality[[5]][5][[1]][[4]][[4]],
+                 Views_json_data$personality[[5]][5][[1]][[4]][[4]],
+                 MoreLife_json_data$personality[[5]][5][[1]][[4]][[4]])
+
+
+Self_Conscious<- c(ThankMeLater_json_data$personality[[5]][5][[1]][[5]][[4]], 
+                       TakeCare_json_data$personality[[5]][5][[1]][[5]][[4]], 
+                       NothingWasTheSame_json_data$personality[[5]][5][[1]][[5]][[4]], 
+                       IfYoureReadingThisItsTooLate_json_data$personality[[5]][5][[1]][[5]][[4]],
+                       Views_json_data$personality[[5]][5][[1]][[5]][[4]],
+                       MoreLife_json_data$personality[[5]][5][[1]][[5]][[4]])
+
+Stress<- c(ThankMeLater_json_data$personality[[5]][5][[1]][[6]][[4]], 
+           TakeCare_json_data$personality[[5]][5][[1]][[6]][[4]], 
+           NothingWasTheSame_json_data$personality[[5]][5][[1]][[6]][[4]], 
+           IfYoureReadingThisItsTooLate_json_data$personality[[5]][5][[1]][[6]][[4]],
+           Views_json_data$personality[[5]][5][[1]][[6]][[4]],
+           MoreLife_json_data$personality[[5]][5][[1]][[6]][[4]])
+
+Drake_Neuroticism<- data.frame(Album_name, Fiery, Prone_to_Worry, Melancholy)
+
+Drake_Neuroticism.long<- melt(Drake_Neuroticism)
+
+ggplot(Drake_Neuroticism.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge") + 
+  labs(title="Drake's Emotional Range", fill= "Album", x= "Emotional Range Facets", y= "Percentile Rank")
+```
+
+**Fiery** - Tendency to experience, but not necessarily express, anger or frustration.
+
+**Worry Prone** - Tendency to dwell on difficulty or troubles; easily experience unease or concern.
+
+**Melancholy** - Normal tendency to experience feelings of guilt, sadness, hopelessness, or loneliness.
+
+```{r Emotional Range 2, echo=FALSE}
+Drake_Neuroticism2<- data.frame(Album_name, Immoderation, Self_Conscious, Stress)
+
+Drake_Neuroticism2.long<- melt(Drake_Neuroticism2)
+
+ggplot(Drake_Neuroticism2.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge") + 
+  labs(title="Drake's Emotional Range", fill= "Album", x= "Emotional Range Facets", y= "Percentile Rank") 
+```
+
+**Immoderation** - Tendency to act on cravings and urges rather over resisting them or delaying gratification.
+
+**Self_Conscious** -  Concern with rejection, embarrassment; shyness.
+
+**Stress** - Difficulty in coping with stress or pressure in difficult situations.
+
+
+***
+
+Now we'll be taking a look at Consumer Needs. Research literature suggests that several types of human needs are universal and directly influence consumer behavior. The twelve categories of needs that are reported by the service are described in marketing literature as desires that a person hopes to fulfill when considering a product or service.
+
+```{r Consumer Needs, echo= FALSE}
+Challenge<- c(ThankMeLater_json_data$needs[[1]][[4]], 
+              TakeCare_json_data$needs[[1]][[4]], 
+              NothingWasTheSame_json_data$needs[[1]][[4]], 
+              IfYoureReadingThisItsTooLate_json_data$needs[[1]][[4]],
+              Views_json_data$needs[[1]][[4]],
+              MoreLife_json_data$needs[[1]][[4]])
+
+Closeness<- c(ThankMeLater_json_data$needs[[2]][[4]], 
+              TakeCare_json_data$needs[[2]][[4]], 
+              NothingWasTheSame_json_data$needs[[2]][[4]], 
+              IfYoureReadingThisItsTooLate_json_data$needs[[2]][[4]],
+              Views_json_data$needs[[2]][[4]],
+              MoreLife_json_data$needs[[2]][[4]])
+
+Curiosity<- c(ThankMeLater_json_data$needs[[3]][[4]], 
+              TakeCare_json_data$needs[[3]][[4]], 
+              NothingWasTheSame_json_data$needs[[3]][[4]], 
+              IfYoureReadingThisItsTooLate_json_data$needs[[3]][[4]],
+              Views_json_data$needs[[3]][[4]],
+              MoreLife_json_data$needs[[3]][[4]])
+
+Excitement<- c(ThankMeLater_json_data$needs[[4]][[4]], 
+               TakeCare_json_data$needs[[4]][[4]], 
+               NothingWasTheSame_json_data$needs[[4]][[4]], 
+               IfYoureReadingThisItsTooLate_json_data$needs[[4]][[4]],
+               Views_json_data$needs[[4]][[4]],
+               MoreLife_json_data$needs[[4]][[4]])
+
+
+Harmony<- c(ThankMeLater_json_data$needs[[5]][[4]], 
+            TakeCare_json_data$needs[[5]][[4]], 
+            NothingWasTheSame_json_data$needs[[5]][[4]], 
+            IfYoureReadingThisItsTooLate_json_data$needs[[5]][[4]],
+            Views_json_data$needs[[5]][[4]],
+            MoreLife_json_data$needs[[5]][[4]])
+
+Ideal<- c(ThankMeLater_json_data$needs[[6]][[4]], 
+          TakeCare_json_data$needs[[6]][[4]], 
+          NothingWasTheSame_json_data$needs[[6]][[4]], 
+          IfYoureReadingThisItsTooLate_json_data$needs[[6]][[4]],
+          Views_json_data$needs[[6]][[4]],
+          MoreLife_json_data$needs[[6]][[4]])
+
+
+Liberty<- c(ThankMeLater_json_data$needs[[7]][[4]], 
+            TakeCare_json_data$needs[[7]][[4]], 
+            NothingWasTheSame_json_data$needs[[7]][[4]], 
+            IfYoureReadingThisItsTooLate_json_data$needs[[7]][[4]],
+            Views_json_data$needs[[7]][[4]],
+            MoreLife_json_data$needs[[7]][[4]])
+
+Love<- c(ThankMeLater_json_data$needs[[8]][[4]], 
+         TakeCare_json_data$needs[[8]][[4]], 
+         NothingWasTheSame_json_data$needs[[8]][[4]], 
+         IfYoureReadingThisItsTooLate_json_data$needs[[8]][[4]],
+         Views_json_data$needs[[8]][[4]],
+         MoreLife_json_data$needs[[8]][[4]])
+
+Practicality<- c(ThankMeLater_json_data$needs[[9]][[4]], 
+                 TakeCare_json_data$needs[[9]][[4]], 
+                 NothingWasTheSame_json_data$needs[[9]][[4]], 
+                 IfYoureReadingThisItsTooLate_json_data$needs[[9]][[4]],
+                 Views_json_data$needs[[9]][[4]],
+                 MoreLife_json_data$needs[[9]][[4]])
+
+Self_Expression<- c(ThankMeLater_json_data$needs[[10]][[4]], 
+                    TakeCare_json_data$needs[[10]][[4]], 
+                    NothingWasTheSame_json_data$needs[[10]][[4]], 
+                    IfYoureReadingThisItsTooLate_json_data$needs[[10]][[4]],
+                    Views_json_data$needs[[10]][[4]],
+                    MoreLife_json_data$needs[[10]][[4]])
+
+Stability<- c(ThankMeLater_json_data$needs[[11]][[4]], 
+              TakeCare_json_data$needs[[11]][[4]], 
+              NothingWasTheSame_json_data$needs[[11]][[4]], 
+              IfYoureReadingThisItsTooLate_json_data$needs[[11]][[4]],
+              Views_json_data$needs[[11]][[4]],
+              MoreLife_json_data$needs[[11]][[4]])
+
+Structure<- c(ThankMeLater_json_data$needs[[12]][[4]], 
+              TakeCare_json_data$needs[[12]][[4]], 
+              NothingWasTheSame_json_data$needs[[12]][[4]], 
+              IfYoureReadingThisItsTooLate_json_data$needs[[12]][[4]],
+              Views_json_data$needs[[12]][[4]],
+              MoreLife_json_data$needs[[12]][[4]])
+
+
+Drake_Needs1<- data.frame(Album_name, Challenge, Closeness, Curiosity, Excitement, Harmony, Ideal)
+
+Drake_Needs1.long<- melt(Drake_Needs1)
+
+ggplot(Drake_Needs1.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge") + 
+  labs(title="Drake's Consumer Needs", fill= "Album", x= "Consumer Needs", y= "Percentile Rank")
+```
+
+**Challenge** - A desire to achieve, succeed, compete, or pursue experiences that test one's abilities.
+
+**Closeness** - A need to nurture or be nurtured; a feeling of belonging.
+
+**Curiosity** - A need to pursue experiences that foster learning, exploration, and growth. 
+
+**Excitement** -A need to pursue experiences or lead a lifestyle that arouses enthusiasm and eagerness.
+
+**Harmony** -  A need to appreciate or please other people, their viewpoints, and feelings.
+
+**Ideal** - A desire to satisfy one's idea of perfection in a lifestyle or experience, oftentimes seen as pursuing a sense of community.
+
+```{r Consumer Needs 2, echo= FALSE}
+Drake_Needs2<- data.frame(Album_name, Liberty, Love, Practicality, Self_Expression, Stability,
+                          Structure)
+
+Drake_Needs2.long<- melt(Drake_Needs2)
+
+ggplot(Drake_Needs2.long,aes(variable,value,fill=Album_name))+
+  geom_bar(stat="identity",position="dodge") + 
+  labs(title="Drake's Consumer Needs", fill= "Album", x= "Consumer Needs", y= "Percentile Rank")
+```
+
+**Liberty** - A need to escape, a desire for new experiences, new things.
+
+**Love** - Social contact, whether one-to-one or one-to-many.
+
+**Practicality** - A desire for getting the job done, skill, and efficiency.
+
+**Self Expression** -A desire to discover and assert one's identity.
+
+**Stability** -  A need for the sensible, tried and tested, with a good track record and a known history.
+
+**Structure** - A need for organization, planning, and things that have a clear purpose.
+
+***
+
+Now we're going to take a look at Values. Values convey what is most important to an individual. They are "desirable, trans-situational goals, varying in importance, that serve as guiding principles in people's lives". Five features that are common to all values: (1) values are beliefs; (2) values are a motivational construct; (3) values transcend specific actions and situations; (4) values guide the selection or evaluation of actions, policies, people, and events; and (5) values vary by relative importance and can be ranked accordingly. The service computes the five basic human values proposed by Schwartz and validated in more than twenty countries (Schwartz, 1992).
+
+```{r Values, echo=FALSE}
+Tradition<- c(ThankMeLater_json_data$needs[[1]][[4]], 
+              TakeCare_json_data$needs[[1]][[4]], 
+              NothingWasTheSame_json_data$needs[[1]][[4]], 
+              IfYoureReadingThisItsTooLate_json_data$needs[[1]][[4]],
+              Views_json_data$needs[[1]][[4]],
+              MoreLife_json_data$needs[[1]][[4]])
+
+Stimulation<- c(ThankMeLater_json_data$needs[[2]][[4]], 
+                TakeCare_json_data$needs[[2]][[4]], 
+                NothingWasTheSame_json_data$needs[[2]][[4]], 
+                IfYoureReadingThisItsTooLate_json_data$needs[[2]][[4]],
+                Views_json_data$needs[[2]][[4]],
+                MoreLife_json_data$needs[[2]][[4]])
+
+Hedonism<- c(ThankMeLater_json_data$needs[[3]][[4]], 
+             TakeCare_json_data$needs[[3]][[4]], 
+             NothingWasTheSame_json_data$needs[[3]][[4]], 
+             IfYoureReadingThisItsTooLate_json_data$needs[[3]][[4]],
+             Views_json_data$needs[[3]][[4]],
+             MoreLife_json_data$needs[[3]][[4]])
+
+Achievement<- c(ThankMeLater_json_data$needs[[4]][[4]], 
+                TakeCare_json_data$needs[[4]][[4]], 
+                NothingWasTheSame_json_data$needs[[4]][[4]], 
+                IfYoureReadingThisItsTooLate_json_data$needs[[4]][[4]],
+                Views_json_data$needs[[4]][[4]],
+                MoreLife_json_data$needs[[4]][[4]])
+
+Transcendence<- c(ThankMeLater_json_data$needs[[5]][[4]], 
+                  TakeCare_json_data$needs[[5]][[4]], 
+                  NothingWasTheSame_json_data$needs[[5]][[4]], 
+                  IfYoureReadingThisItsTooLate_json_data$needs[[5]][[4]],
+                  Views_json_data$needs[[5]][[4]],
+                  MoreLife_json_data$needs[[5]][[4]])
+
+
+
+Drake_Values<- data.frame(Album_name, Tradition, Stimulation, Hedonism, Achievement, Transcendence)
+
+Drake_Values.long<- melt(Drake_Values)
+
+ggplot(Drake_Values.long,aes(variable,value,fill=Album_name))+
+ geom_bar(stat="identity", position= "dodge") + 
+  labs(title="Drake's Values", fill= "Album", x= "Values", y= "Percentile Rank")
+
+```
+
+**Tradition/Conservation** - Respect, commitment, and acceptance of the customs and ideas that one's culture and/or religion provides.
+
+**Stimulation/ Openness to Change** - Excitement, novelty, and challenge in life.
+
+**Hedonism/Taking Pleasure in Life** - Pleasure or sensuous gratification for oneself.
+
+**Achievement/Self-Enhancement** - Personal success through demonstrating competence according to social standards.
+
+**Self-Transcendence/Helping Others** -  Preserving and enhancing the welfare of those with whom one is in frequent personal contact.
+
+***
